@@ -85,8 +85,12 @@ export const Sidebar: React.FC<SidebarProps> = () => {
     <aside className="w-56 sm:w-60 bg-[#0c2136] text-slate-300 flex flex-col shrink-0 border-r border-slate-800 self-stretch sticky top-16 h-[calc(100vh-4rem)]">
       {/* Portal Brand Header in Sidebar */}
       <div className="p-4 border-b border-slate-700/60 flex items-center gap-2.5">
-        <div className="w-7 h-7 rounded bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow">
-          MI
+        <div className="w-8 h-8 rounded-full bg-white border border-amber-400/80 shadow-xs flex items-center justify-center overflow-hidden p-0.5 shrink-0">
+          <img
+            src="/maharashtra_seal.png"
+            alt="Maharashtra Seal"
+            className="w-full h-full object-contain rounded-full"
+          />
         </div>
         <div>
           <div className="text-xs font-bold tracking-tight text-white">MahaInnovate</div>

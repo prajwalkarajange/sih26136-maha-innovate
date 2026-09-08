@@ -113,15 +113,15 @@ export const Page02_LoginPage: React.FC = () => {
     <div className="py-10 px-4 sm:px-6 max-w-5xl mx-auto space-y-8">
       {/* Government of Maharashtra Welcome Header */}
       <div className="text-center max-w-xl mx-auto space-y-2">
-        <div className="w-14 h-14 mx-auto mb-2 rounded-full bg-amber-50 border-2 border-amber-600 flex items-center justify-center text-amber-800 shadow-sm">
-          <svg viewBox="0 0 100 100" className="w-9 h-9 fill-amber-700">
-            <circle cx="50" cy="50" r="45" stroke="#b45309" strokeWidth="4" fill="#fef3c7" />
-            <polygon points="50,15 60,35 85,35 65,50 72,75 50,60 28,75 35,50 15,35 40,35" fill="#d97706" />
-            <circle cx="50" cy="50" r="10" fill="#92400e" />
-          </svg>
+        <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-white border-2 border-amber-500 shadow-sm flex items-center justify-center overflow-hidden p-1">
+          <img
+            src="/maharashtra_seal.png"
+            alt="Government of Maharashtra Seal"
+            className="w-full h-full object-contain rounded-full"
+          />
         </div>
         <div className="text-xs font-bold uppercase tracking-widest text-slate-500">
-          Government of Maharashtra
+          महाराष्ट्र शासन | Government of Maharashtra
         </div>
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
           {isRegister ? 'Register Your Startup' : 'MahInnovate Portal Sign In'}
