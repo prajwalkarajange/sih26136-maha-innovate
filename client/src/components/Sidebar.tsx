@@ -18,14 +18,17 @@ import {
   Scale,
   LogOut,
   Layers,
-  FileCheck2
+  FileCheck2,
+  X
 } from 'lucide-react';
 
 interface SidebarProps {
   portalType?: 'government' | 'startup' | 'admin' | 'evaluator';
+  mobileOpen?: boolean;
+  onClose?: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = () => {
+export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, onClose }) => {
   const { role, logout } = useAuth();
   const navigate = useNavigate();
   const currentPortal = role;
@@ -82,64 +85,151 @@ export const Sidebar: React.FC<SidebarProps> = () => {
     : 'Government Portal';
 
   return (
-    <aside className="w-56 sm:w-60 bg-[#0c2136] text-slate-300 flex flex-col shrink-0 border-r border-slate-800 self-stretch sticky top-16 h-[calc(100vh-4rem)]">
-      {/* Portal Brand Header in Sidebar */}
-      <div className="p-4 border-b border-slate-700/60 flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-full bg-white border border-amber-400/80 shadow-xs flex items-center justify-center overflow-hidden p-0.5 shrink-0">
-          <img
-            src="/maharashtra_seal.png"
-            alt="Maharashtra Seal"
-            className="w-full h-full object-contain rounded-full"
-          />
-        </div>
-        <div>
-          <div className="text-xs font-bold tracking-tight text-white">MahaInnovate</div>
-          <div className="text-[10px] text-blue-400 font-medium uppercase tracking-wider">{portalTitle}</div>
-        </div>
-      </div>
-
-      {/* Navigation Links */}
-      <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
-        {items.map((item, idx) => {
-          const Icon = item.icon;
-          return (
-            <NavLink
-              key={idx}
-              to={item.to}
-              className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition ${
-                  isActive
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'text-slate-300 hover:bg-[#132d47] hover:text-white'
-                }`
-              }
-            >
-              <Icon className="w-4 h-4 text-slate-400 group-hover:text-white flex-shrink-0" />
-              <span>{item.label}</span>
-            </NavLink>
-          );
-        })}
-      </nav>
-
-      {/* Footer Info & Logout */}
-      <div className="p-3 border-t border-slate-800 text-[11px] text-slate-400 space-y-2">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-slate-200 font-semibold truncate">Problem Statement 26136</div>
-            <div className="text-[10px] text-slate-500">Government of Maharashtra</div>
+    <>
+      {/* Desktop Sidebar (hidden on mobile, visible on lg+) */}
+      <aside className="hidden lg:flex w-56 sm:w-60 bg-[#0c2136] text-slate-300 flex-col shrink-0 border-r border-slate-800 self-stretch sticky top-16 h-[calc(100vh-4rem)]">
+        {/* Portal Brand Header in Sidebar */}
+        <div className="p-4 border-b border-slate-700/60 flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-full bg-white border border-amber-400/80 shadow-xs flex items-center justify-center overflow-hidden p-0.5 shrink-0">
+            <img
+              src="/maharashtra_seal.png"
+              alt="Maharashtra Seal"
+              className="w-full h-full object-contain rounded-full"
+            />
           </div>
-          <button
-            onClick={() => {
-              logout();
-              navigate('/');
-            }}
-            className="p-1 text-slate-400 hover:text-red-400 hover:bg-white/10 rounded transition"
-            title="Sign Out"
-          >
-            <LogOut className="w-4 h-4" />
-          </button>
+          <div>
+            <div className="text-xs font-bold tracking-tight text-white">MahaInnovate</div>
+            <div className="text-[10px] text-blue-400 font-medium uppercase tracking-wider">{portalTitle}</div>
+          </div>
         </div>
-      </div>
-    </aside>
+
+        {/* Navigation Links */}
+        <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
+          {items.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <NavLink
+                key={idx}
+                to={item.to}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition ${
+                    isActive
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'text-slate-300 hover:bg-[#132d47] hover:text-white'
+                  }`
+                }
+              >
+                <Icon className="w-4 h-4 text-slate-400 group-hover:text-white shrink-0" />
+                <span>{item.label}</span>
+              </NavLink>
+            );
+          })}
+        </nav>
+
+        {/* Footer Info & Logout */}
+        <div className="p-3 border-t border-slate-800 text-[11px] text-slate-400 space-y-2">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-slate-200 font-semibold truncate">Problem Statement 26136</div>
+              <div className="text-[10px] text-slate-500">Government of Maharashtra</div>
+            </div>
+            <button
+              onClick={() => {
+                logout();
+                navigate('/');
+              }}
+              className="p-1 text-slate-400 hover:text-red-400 hover:bg-white/10 rounded transition cursor-pointer"
+              title="Sign Out"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* Mobile Off-Canvas Drawer (< lg) */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden flex">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
+            onClick={onClose}
+          />
+          {/* Slide-out Sidebar */}
+          <aside className="relative w-72 max-w-[85vw] bg-[#0c2136] text-slate-300 flex flex-col h-full z-10 shadow-2xl animate-in slide-in-from-left duration-200">
+            {/* Header with Close X */}
+            <div className="p-4 border-b border-slate-700/60 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-white border border-amber-400/80 shadow-xs flex items-center justify-center overflow-hidden p-0.5 shrink-0">
+                  <img
+                    src="/maharashtra_seal.png"
+                    alt="Maharashtra Seal"
+                    className="w-full h-full object-contain rounded-full"
+                  />
+                </div>
+                <div>
+                  <div className="text-xs font-bold tracking-tight text-white">MahaInnovate</div>
+                  <div className="text-[10px] text-blue-400 font-medium uppercase tracking-wider">{portalTitle}</div>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-slate-700/50 transition cursor-pointer"
+                title="Close Menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Navigation Links */}
+            <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+              {items.map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <NavLink
+                    key={idx}
+                    to={item.to}
+                    onClick={onClose}
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition ${
+                        isActive
+                          ? 'bg-blue-600 text-white shadow-sm'
+                          : 'text-slate-300 hover:bg-[#132d47] hover:text-white'
+                      }`
+                    }
+                  >
+                    <Icon className="w-4 h-4 text-slate-400 group-hover:text-white shrink-0" />
+                    <span>{item.label}</span>
+                  </NavLink>
+                );
+              })}
+            </nav>
+
+            {/* Footer Info & Logout */}
+            <div className="p-3 border-t border-slate-800 text-[11px] text-slate-400 space-y-2">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-slate-200 font-semibold truncate">Problem Statement 26136</div>
+                  <div className="text-[10px] text-slate-500">Government of Maharashtra</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose?.();
+                    logout();
+                    navigate('/');
+                  }}
+                  className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-white/10 rounded transition cursor-pointer"
+                  title="Sign Out"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      )}
+    </>
   );
 };

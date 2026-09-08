@@ -73,8 +73,8 @@ export const Page15_ProcurementPage: React.FC = () => {
       )}
 
       {/* Procurement Details Card matching Reference Image */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-2xs p-6 space-y-4 text-xs">
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pb-3 border-b border-slate-100">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-2xs p-4 sm:p-6 space-y-4 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-3 pb-3 border-b border-slate-100">
           <span className="sm:col-span-4 font-bold text-slate-500 uppercase tracking-wider text-[11px]">
             Startup
           </span>
@@ -84,7 +84,7 @@ export const Page15_ProcurementPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pb-3 border-b border-slate-100">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-3 pb-3 border-b border-slate-100">
           <span className="sm:col-span-4 font-bold text-slate-500 uppercase tracking-wider text-[11px]">
             Solution
           </span>
@@ -93,7 +93,7 @@ export const Page15_ProcurementPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pb-3 border-b border-slate-100">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-3 pb-3 border-b border-slate-100">
           <span className="sm:col-span-4 font-bold text-slate-500 uppercase tracking-wider text-[11px]">
             Pilot Score
           </span>
@@ -102,7 +102,7 @@ export const Page15_ProcurementPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pb-3 border-b border-slate-100">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-3 pb-3 border-b border-slate-100">
           <span className="sm:col-span-4 font-bold text-slate-500 uppercase tracking-wider text-[11px]">
             Approved Budget
           </span>
@@ -111,7 +111,7 @@ export const Page15_ProcurementPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pb-3 border-b border-slate-100">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-3 pb-3 border-b border-slate-100">
           <span className="sm:col-span-4 font-bold text-slate-500 uppercase tracking-wider text-[11px]">
             Procurement Type
           </span>
@@ -120,7 +120,7 @@ export const Page15_ProcurementPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pb-1">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-3 pb-1">
           <span className="sm:col-span-4 font-bold text-slate-500 uppercase tracking-wider text-[11px]">
             Contract Duration
           </span>
@@ -130,10 +130,10 @@ export const Page15_ProcurementPage: React.FC = () => {
         </div>
 
         {/* Action Buttons matching Reference Image */}
-        <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-end gap-3">
+        <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3">
           <button
             onClick={handleGeneratePO}
-            className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold shadow-sm transition flex items-center gap-1.5 cursor-pointer"
+            className="w-full sm:w-auto px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <FileCheck className="w-4 h-4" />
             <span>Generate Purchase Order</span>
@@ -142,7 +142,7 @@ export const Page15_ProcurementPage: React.FC = () => {
           <button
             onClick={handleApprove}
             disabled={loading}
-            className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold shadow-sm transition flex items-center gap-1.5 cursor-pointer"
+            className="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <CheckCircle2 className="w-4 h-4" />
             <span>{loading ? 'Approving...' : 'Approve Procurement'}</span>

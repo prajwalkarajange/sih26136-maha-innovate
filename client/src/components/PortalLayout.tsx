@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navigate, Link, useNavigate } from 'react-router-dom';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
@@ -6,7 +6,7 @@ import { Footer } from './Footer';
 import { MahiAssistantDrawer } from './MahiAssistantDrawer';
 import { useAuth } from '../context/AuthContext';
 import { UserRole } from '../types';
-import { ShieldAlert, ArrowLeft, LogOut } from 'lucide-react';
+import { ShieldAlert, ArrowLeft, LogOut, Menu } from 'lucide-react';
 
 interface PortalLayoutProps {
   children: React.ReactNode;
@@ -20,6 +20,7 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({
 }) => {
   const { isAuthenticated, role, user, logout } = useAuth();
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // If user is not authenticated, redirect to login page
   if (!isAuthenticated) {
@@ -46,8 +47,8 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({
       <div className="min-h-screen bg-slate-100 flex flex-col justify-between selection:bg-blue-600 selection:text-white font-sans">
         <Header />
 
-        <div className="flex-1 flex flex-row w-full">
-          <Sidebar />
+        <div className="flex-1 flex flex-col lg:flex-row w-full min-w-0">
+          <Sidebar mobileOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
           <main className="flex-1 p-6 lg:p-12 w-full max-w-4xl mx-auto flex items-center justify-center">
             <div className="bg-white rounded-2xl border border-red-200 shadow-xl p-8 max-w-lg w-full text-center space-y-5">
@@ -107,14 +108,43 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({
       <Header />
 
       {/* Main Body Container: Sidebar + Content */}
-      <div className="flex-1 flex flex-row w-full">
-        {/* Navy Left Sidebar */}
-        <Sidebar />
+      <div className="flex-1 flex flex-col lg:flex-row w-full min-w-0">
+        {/* Navy Left Sidebar (Desktop Fixed, Mobile Off-Canvas Drawer) */}
+        <Sidebar mobileOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-        {/* Central Content Area with Standardized Max Width and Spacing */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 w-full max-w-6xl mx-auto overflow-x-hidden">
-          {children}
-        </main>
+        {/* Central Content Column */}
+        <div className="flex-1 flex flex-col min-w-0 w-full">
+          {/* Mobile Portal Navigation Bar (< lg) */}
+          <div className="lg:hidden sticky top-14 z-20 bg-[#0c2136] text-white px-3 sm:px-4 py-2 flex items-center justify-between border-b border-slate-800 shadow-2xs">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+              <div className="flex flex-col min-w-0">
+                <span className="text-xs font-bold text-white truncate leading-tight">
+                  {role === 'government' ? 'Government Officer Portal' :
+                   role === 'startup' ? 'Startup Workspace' :
+                   role === 'evaluator' ? 'Evaluator Panel' : 'System Admin Console'}
+                </span>
+                <span className="text-[10px] text-blue-300 truncate leading-tight">
+                  {user?.name || 'Authorized User'}
+                </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(true)}
+              className="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-md text-xs font-bold flex items-center gap-1.5 shadow-2xs shrink-0 cursor-pointer"
+            >
+              <Menu className="w-3.5 h-3.5" />
+              <span>Portal Menu</span>
+            </button>
+          </div>
+
+          {/* Central Content Area with Standardized Max Width and Spacing */}
+          <main className="flex-1 p-3 sm:p-6 lg:p-8 w-full max-w-6xl mx-auto overflow-x-hidden min-w-0">
+            {children}
+          </main>
+        </div>
       </div>
 
       {/* Official Government Footer */}
