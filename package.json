@@ -10,7 +10,8 @@
     "dev:client": "cd client && npm run dev",
     "build:server": "cd server && npm run build",
     "build:client": "cd client && npm run build",
-    "build": "npm run build:server && npm run build:client"
+    "build": "npm run build:server && npm run build:client",
+    "vercel-build": "cd client && npm install && npm run build"
   },
   "keywords": ["mahainnovate", "procurement", "startup", "government", "maharashtra", "ai"],
   "author": "Government of Maharashtra / MahaInnovate Team",

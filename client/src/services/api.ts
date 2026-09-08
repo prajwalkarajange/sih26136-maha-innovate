@@ -88,11 +88,13 @@ function saveState(state: StateSchema) {
 
 let currentState = loadState();
 
+export const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+
 export const api = {
   // 1. Auth & Users
   login: async (email: string, role?: string): Promise<{ user: User; token: string }> => {
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, role }),
@@ -121,7 +123,7 @@ export const api = {
   getChallenges: async (filters?: { search?: string; status?: string }): Promise<Challenge[]> => {
     try {
       const query = new URLSearchParams(filters as any).toString();
-      const res = await fetch(`/api/challenges?${query}`);
+      const res = await fetch(`${API_BASE}/api/challenges?${query}`);
       if (res.ok) return await res.json();
     } catch (e) {}
 
@@ -138,7 +140,7 @@ export const api = {
 
   getChallenge: async (id: number): Promise<Challenge | undefined> => {
     try {
-      const res = await fetch(`/api/challenges/${id}`);
+      const res = await fetch(`${API_BASE}/api/challenges/${id}`);
       if (res.ok) return await res.json();
     } catch (e) {}
 
@@ -147,7 +149,7 @@ export const api = {
 
   createChallenge: async (data: Partial<Challenge>): Promise<Challenge> => {
     try {
-      const res = await fetch('/api/challenges', {
+      const res = await fetch(`${API_BASE}/api/challenges`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -191,7 +193,7 @@ export const api = {
 
   updateChallengeStatus: async (id: number, status: Challenge['status']): Promise<Challenge> => {
     try {
-      const res = await fetch(`/api/challenges/${id}/status`, {
+      const res = await fetch(`${API_BASE}/api/challenges/${id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
@@ -224,7 +226,7 @@ export const api = {
 
   runAIAnalysis: async (challengeId: number): Promise<AIRequirementAnalysis> => {
     try {
-      const res = await fetch(`/api/challenges/${challengeId}/analyze`, { method: 'POST' });
+      const res = await fetch(`${API_BASE}/api/challenges/${challengeId}/analyze`, { method: 'POST' });
       if (res.ok) return await res.json();
     } catch (e) {}
 
@@ -273,7 +275,7 @@ export const api = {
   // 4. Startup Matches
   getMatches: async (challengeId: number): Promise<StartupMatch[]> => {
     try {
-      const res = await fetch(`/api/challenges/${challengeId}/matches`);
+      const res = await fetch(`${API_BASE}/api/challenges/${challengeId}/matches`);
       if (res.ok) return await res.json();
     } catch (e) {}
 
@@ -543,7 +545,7 @@ export const api = {
   // 12. Mahi Assistant
   mahiChat: async (message: string, context: { page: string; role?: string }) => {
     try {
-      const res = await fetch('/api/ai/mahi/chat', {
+      const res = await fetch(`${API_BASE}/api/ai/mahi/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message, context }),

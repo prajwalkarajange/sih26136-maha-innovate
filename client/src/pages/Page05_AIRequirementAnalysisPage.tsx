@@ -83,13 +83,69 @@ export const Page05_AIRequirementAnalysisPage: React.FC = () => {
     },
   ];
 
+  const runFallbackSimulation = (t: string) => {
+    const lower = t.toLowerCase();
+    if (lower.includes('health') || lower.includes('rural') || lower.includes('med')) {
+      setDomain('Public Health & Rural Care');
+      setTechnologies(['IoT', 'Edge Computing', 'Telemedicine', 'AI Diagnostics']);
+      setKeyRequirements(['Portable & Battery-Powered', 'High Diagnostic Reliability', 'Multilingual UI (Marathi/Hindi/English)']);
+      setExpectedSolution('Portable edge-diagnostic kit and tele-consultation platform for rural Primary Health Centers');
+      setPotentialImpact('Primary health access for 50,000+ villagers, faster emergency triage response');
+      setSuggestedKpis({ diagnostic_accuracy: '> 95%', sync_latency: '< 5 sec', patient_satisfaction: '> 85%' });
+      setPotentialRisks(['Sporadic cellular network in tribal talukas', 'Staff training curve for digital kits']);
+      setSuggestedEligibility(['DPIIT Registered Startup', 'Proven IoT or Medical Device Prototype', 'ISO 13485 or CE certification roadmap']);
+      setSuggestedDeliverables(['50 Field deployment kits in rural PHCs', 'Doctor tele-consultation dashboard with real-time sync']);
+    } else if (lower.includes('traffic') || lower.includes('road') || lower.includes('transport')) {
+      setDomain('Intelligent Transportation & Mobility');
+      setTechnologies(['Computer Vision', 'Deep Learning', 'Edge AI', 'IoT Traffic Controllers']);
+      setKeyRequirements(['Sub-second Latency', 'All-Weather Durability', 'Integration with Existing Signals']);
+      setExpectedSolution('Adaptive AI traffic signal controller with edge video analytics & congestion prediction');
+      setPotentialImpact('25% reduction in commuter travel times, 18% municipal fuel savings');
+      setSuggestedKpis({ queue_reduction: '> 25%', uptime: '> 99.8%', incident_detection_time: '< 30 sec' });
+      setPotentialRisks(['Camera lens occlusion from monsoon grime', 'Power grid fluctuations at older junctions']);
+      setSuggestedEligibility(['DPIIT Registered Startup', 'Demonstrated Computer Vision PoC with municipal test data']);
+      setSuggestedDeliverables(['Pilot hardware installed across 10 key junctions', 'Traffic management command center integration']);
+    } else if (lower.includes('crop') || lower.includes('drone') || lower.includes('agri') || lower.includes('farm')) {
+      setDomain('AgriTech & Disaster Management');
+      setTechnologies(['UAVs / Drones', 'Multispectral Imaging', 'GIS', 'AI Vision']);
+      setKeyRequirements(['Sub-Meter Precision', 'Automated Claims Processing', 'Fast Turnaround']);
+      setExpectedSolution('Autonomous drone fleet crop loss analysis portal integrated with state revenue records');
+      setPotentialImpact('Disbursement of farmer relief in 7 days instead of 90 days');
+      setSuggestedKpis({ survey_speed: '> 500 acres/day', estimation_accuracy: '> 92%', fraud_reduction: '> 40%' });
+      setPotentialRisks(['Adverse weather grounding drones', 'Discrepancy with legacy paper land parcel maps']);
+      setSuggestedEligibility(['DGCA-certified drone operations', 'DPIIT Registered Startup', 'GIS analytics engine']);
+      setSuggestedDeliverables(['Survey report of 10,000 acres in target taluka', 'Automated damage payout recommendation portal']);
+    } else if (lower.includes('waste') || lower.includes('water') || lower.includes('clean') || lower.includes('environment')) {
+      setDomain('Urban Sanitation & Circular Economy');
+      setTechnologies(['IoT Fill Sensors', 'Route Optimization AI', 'Computer Vision Segregation']);
+      setKeyRequirements(['Real-time Tracking', 'Dynamic Scheduling', 'Citizen Feedback Portal']);
+      setExpectedSolution('Automated smart waste monitoring & AI-optimized municipal collection dispatch system');
+      setPotentialImpact('38% fuel reduction in municipal fleets, 95% on-time garbage clearance');
+      setSuggestedKpis({ fleet_fuel_saved: '> 30%', bin_overflow_incidents: '< 2/month', citizen_satisfaction: '> 88%' });
+      setPotentialRisks(['Sensor damage in high-traffic bins', 'Inconsistent driver app compliance']);
+      setSuggestedEligibility(['DPIIT Registered Startup', 'Hardware IoT telemetry prototype']);
+      setSuggestedDeliverables(['Sensors installed across 100 municipal bins', 'Real-time dispatch optimization dashboard']);
+    } else {
+      setDomain('Public Governance & Digital Transformation');
+      setTechnologies(['Cloud Computing', 'AI / ML', 'Mobile Platforms', 'IoT Sensors']);
+      setKeyRequirements(['Scalable Architecture', 'Data Security & ISO Compliance', 'High Accessibility']);
+      setExpectedSolution(`AI-enabled digital platform optimizing ${t || 'public administration'} for rapid citizen delivery`);
+      setPotentialImpact('Streamlined citizen service delivery, 45% reduction in administrative turnaround time');
+      setSuggestedKpis({ sla_compliance: '> 98%', citizen_satisfaction: '> 90%', uptime: '> 99.9%' });
+      setPotentialRisks(['Integration challenges with legacy databases', 'Data privacy compliance requirements']);
+      setSuggestedEligibility(['DPIIT Registered Startup', 'Valid PoC or MVP demonstrator']);
+      setSuggestedDeliverables(['Working pilot deployment with live dashboard', 'Comprehensive evaluation report']);
+    }
+  };
+
   const handleAnalyze = async (customTitle?: string, customProb?: string) => {
     setLoading(true);
     const t = customTitle || inputTitle;
     const p = customProb || inputProblem;
 
     try {
-      const res = await fetch('/api/ai/analyze-requirement', {
+      const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+      const res = await fetch(`${API_BASE}/api/ai/analyze-requirement`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: t, problem_description: p }),
@@ -106,36 +162,16 @@ export const Page05_AIRequirementAnalysisPage: React.FC = () => {
         if (data.potentialRisks) setPotentialRisks(data.potentialRisks);
         if (data.suggestedEligibility) setSuggestedEligibility(data.suggestedEligibility);
         if (data.suggestedDeliverables) setSuggestedDeliverables(data.suggestedDeliverables);
-      } else {
-        // Deterministic local simulation if offline
-        if (t.toLowerCase().includes('health')) {
-          setDomain('Public Health & Rural Care');
-          setTechnologies(['IoT', 'Edge Computing', 'Telemedicine', 'AI Diagnostics']);
-          setKeyRequirements(['Portable', 'High Reliability', 'Multilingual']);
-          setExpectedSolution('Portable edge-diagnostic kit and tele-consultation platform for rural Primary Health Centers');
-          setPotentialImpact('Primary health access for 50,000+ villagers, faster emergency triage response');
-          setSuggestedKpis({ diagnostic_accuracy: '> 95%', sync_latency: '< 5 sec', satisfaction: '> 85%' });
-        } else if (t.toLowerCase().includes('traffic')) {
-          setDomain('Intelligent Transportation');
-          setTechnologies(['Computer Vision', 'Deep Learning', 'Edge AI', 'IoT']);
-          setKeyRequirements(['High Accuracy', 'Low Latency', 'All-Weather']);
-          setExpectedSolution('Adaptive AI traffic signal controller with edge video analytics');
-          setPotentialImpact('25% reduction in commuter travel times, 18% fuel savings');
-          setSuggestedKpis({ queue_reduction: '> 25%', uptime: '> 99.8%' });
-        } else if (t.toLowerCase().includes('crop') || t.toLowerCase().includes('drone')) {
-          setDomain('AgriTech & Disaster Management');
-          setTechnologies(['UAVs / Drones', 'Multispectral Imaging', 'GIS', 'AI Vision']);
-          setKeyRequirements(['Sub-Meter Precision', 'Automated Claims', 'Fast Turnaround']);
-          setExpectedSolution('Autonomous drone fleet crop loss analysis portal integrated with state revenue records');
-          setPotentialImpact('Disbursement of farmer relief in 7 days instead of 90 days');
-          setSuggestedKpis({ survey_speed: '> 500 acres/day', estimation_accuracy: '> 92%' });
-        }
+        return;
       }
     } catch (e) {
       console.warn('Using client fallback AI engine');
     } finally {
       setLoading(false);
     }
+
+    // Run resilient fallback simulation
+    runFallbackSimulation(t);
   };
 
   const handleSelectPreset = (p: typeof presetProblems[0]) => {
