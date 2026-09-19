@@ -21,7 +21,10 @@ import {
   Check,
   ChevronRight,
   FileCheck2,
-  Layers
+  Layers,
+  FileText,
+  BarChart3,
+  Settings
 } from 'lucide-react';
 
 export const Page01_LandingPage: React.FC = () => {
@@ -211,6 +214,303 @@ export const Page01_LandingPage: React.FC = () => {
 
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ============================================================== */}
+      {/* STATE PORTAL OVERVIEW & STATS BAR (Image 1 Exact Match)       */}
+      {/* ============================================================== */}
+      <section className="bg-slate-50/70 border-b border-slate-200 py-10 lg:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          
+          {/* 1. TOP 4 QUICK NAVIGATION CARDS */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+            {/* Card 1: Government Challenges */}
+            <Link
+              to="/marketplace"
+              className="p-5 rounded-2xl bg-[#eff6ff] hover:bg-[#e0edff] border border-blue-100/90 shadow-2xs hover:shadow-md hover:scale-[1.03] transition-all duration-200 transform group flex flex-col justify-between cursor-pointer"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="w-11 h-11 rounded-xl bg-blue-600/10 text-[#0f2d59] flex items-center justify-center shrink-0">
+                  <Building2 className="w-6 h-6 text-[#0f2d59]" />
+                </div>
+                <div className="w-7 h-7 rounded-full bg-white/80 flex items-center justify-center text-blue-600 group-hover:translate-x-1 transition-transform">
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="mt-4 space-y-1">
+                <h3 className="font-extrabold text-[#0f2d59] text-base leading-tight">
+                  Government Challenges <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">शासकीय आव्हाने</span>
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                  Explore real-world problems from various departments
+                </p>
+              </div>
+            </Link>
+
+            {/* Card 2: Startup Opportunities */}
+            <Link
+              to="/login?role=startup"
+              className="p-5 rounded-2xl bg-[#fff7ed] hover:bg-[#ffedd5] border border-amber-100/90 shadow-2xs hover:shadow-md hover:scale-[1.03] transition-all duration-200 transform group flex flex-col justify-between cursor-pointer"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0">
+                  <Users className="w-6 h-6 text-amber-700" />
+                </div>
+                <div className="w-7 h-7 rounded-full bg-white/80 flex items-center justify-center text-amber-600 group-hover:translate-x-1 transition-transform">
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="mt-4 space-y-1">
+                <h3 className="font-extrabold text-[#0f2d59] text-base leading-tight">
+                  Startup Opportunities <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">स्टार्टअप संधी</span>
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                  Discover opportunities to collaborate with Government
+                </p>
+              </div>
+            </Link>
+
+            {/* Card 3: Submit Proposal */}
+            <Link
+              to="/login?role=startup"
+              className="p-5 rounded-2xl bg-[#f0fdf4] hover:bg-[#dcfce7] border border-emerald-100/90 shadow-2xs hover:shadow-md hover:scale-[1.03] transition-all duration-200 transform group flex flex-col justify-between cursor-pointer"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="w-11 h-11 rounded-xl bg-emerald-600/10 text-emerald-700 flex items-center justify-center shrink-0">
+                  <FileText className="w-6 h-6 text-emerald-700" />
+                </div>
+                <div className="w-7 h-7 rounded-full bg-white/80 flex items-center justify-center text-emerald-600 group-hover:translate-x-1 transition-transform">
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="mt-4 space-y-1">
+                <h3 className="font-extrabold text-[#0f2d59] text-base leading-tight">
+                  Submit Proposal <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">प्रस्ताव सादर करा</span>
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                  Share your innovative solution for a challenge
+                </p>
+              </div>
+            </Link>
+
+            {/* Card 4: Track Application */}
+            <Link
+              to="/login"
+              className="p-5 rounded-2xl bg-[#f5f3ff] hover:bg-[#ede9fe] border border-purple-100/90 shadow-2xs hover:shadow-md hover:scale-[1.03] transition-all duration-200 transform group flex flex-col justify-between cursor-pointer"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="w-11 h-11 rounded-xl bg-purple-600/10 text-purple-700 flex items-center justify-center shrink-0">
+                  <BarChart3 className="w-6 h-6 text-purple-700" />
+                </div>
+                <div className="w-7 h-7 rounded-full bg-white/80 flex items-center justify-center text-purple-600 group-hover:translate-x-1 transition-transform">
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="mt-4 space-y-1">
+                <h3 className="font-extrabold text-[#0f2d59] text-base leading-tight">
+                  Track Application <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">अर्जाचा मागोवा घ्या</span>
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                  Check the status of your proposal, pilot or procurement
+                </p>
+              </div>
+            </Link>
+          </div>
+
+          {/* 2. STATS BAR CARDS (5 METRICS) */}
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-4 sm:p-5">
+            <div className="grid grid-cols-2 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-slate-200/80 gap-4 md:gap-0">
+              
+              {/* Stat 1 */}
+              <div className="flex items-center gap-3.5 px-2 sm:px-4 py-2">
+                <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-[#0f2d59] shrink-0 border border-blue-100">
+                  <Target className="w-5 h-5 text-[#0f2d59]" />
+                </div>
+                <div>
+                  <div className="text-2xl font-black text-slate-900 leading-none">24</div>
+                  <div className="text-xs font-bold text-slate-700 mt-1 leading-tight">Government Challenges</div>
+                  <div className="text-[11px] text-slate-500 font-medium">शासकीय आव्हाने</div>
+                </div>
+              </div>
+
+              {/* Stat 2 */}
+              <div className="flex items-center gap-3.5 px-2 sm:px-4 py-2 pt-4 md:pt-2">
+                <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-amber-700 shrink-0 border border-amber-100">
+                  <Users className="w-5 h-5 text-amber-700" />
+                </div>
+                <div>
+                  <div className="text-2xl font-black text-slate-900 leading-none">112</div>
+                  <div className="text-xs font-bold text-slate-700 mt-1 leading-tight">Registered Startups</div>
+                  <div className="text-[11px] text-slate-500 font-medium">नोंदणीकृत स्टार्टअप्स</div>
+                </div>
+              </div>
+
+              {/* Stat 3 */}
+              <div className="flex items-center gap-3.5 px-2 sm:px-4 py-2 pt-4 md:pt-2">
+                <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-700 shrink-0 border border-emerald-100">
+                  <Settings className="w-5 h-5 text-emerald-700" />
+                </div>
+                <div>
+                  <div className="text-2xl font-black text-slate-900 leading-none">8</div>
+                  <div className="text-xs font-bold text-slate-700 mt-1 leading-tight">Ongoing Pilots</div>
+                  <div className="text-[11px] text-slate-500 font-medium">चालू पायलट प्रकल्प</div>
+                </div>
+              </div>
+
+              {/* Stat 4 */}
+              <div className="flex items-center gap-3.5 px-2 sm:px-4 py-2 pt-4 md:pt-2">
+                <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-700 shrink-0 border border-purple-100">
+                  <FileText className="w-5 h-5 text-purple-700" />
+                </div>
+                <div>
+                  <div className="text-2xl font-black text-slate-900 leading-none">5</div>
+                  <div className="text-xs font-bold text-slate-700 mt-1 leading-tight">Procurements Initiated</div>
+                  <div className="text-[11px] text-slate-500 font-medium">खरेदी प्रक्रिया सुरु</div>
+                </div>
+              </div>
+
+              {/* Stat 5 */}
+              <div className="flex items-center gap-3.5 px-2 sm:px-4 py-2 pt-4 md:pt-2">
+                <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-700 shrink-0 border border-indigo-100">
+                  <BarChart3 className="w-5 h-5 text-indigo-700" />
+                </div>
+                <div>
+                  <div className="text-2xl font-black text-slate-900 leading-none">12+</div>
+                  <div className="text-xs font-bold text-slate-700 mt-1 leading-tight">Departments Involved</div>
+                  <div className="text-[11px] text-slate-500 font-medium">सहभागी विभाग</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* 3. FEATURE GRID: LATEST UPDATES | MANTRALAYA QUOTE | MAHI ASSISTANT CARD */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            {/* Column 1: Latest Updates | नवीन घडामोडी */}
+            <div className="lg:col-span-5 bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+                  <h3 className="font-extrabold text-slate-900 text-base flex items-center gap-1.5">
+                    <span>Latest Updates</span>
+                    <span className="text-slate-400 font-normal">|</span>
+                    <span className="text-sm font-semibold text-slate-600 font-sans">नवीन घडामोडी</span>
+                  </h3>
+                  <Link to="/marketplace" className="text-xs font-bold text-blue-600 hover:text-blue-800 transition flex items-center gap-0.5">
+                    <span>View All</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+
+                <div className="divide-y divide-slate-100 text-xs">
+                  {/* Dynamic Date helper */}
+                  {(() => {
+                    const formatDate = (offsetDays: number) => {
+                      const d = new Date();
+                      d.setDate(d.getDate() - offsetDays);
+                      return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+                    };
+                    return (
+                      <>
+                        <div className="py-2.5 flex items-start gap-3">
+                          <span className="font-bold text-blue-700 shrink-0 min-w-[78px]">{formatDate(0)}</span>
+                          <p className="text-slate-800 font-semibold leading-snug">
+                            New challenge on Smart Waste Management published by Urban Development Department.{' '}
+                            <span className="bg-red-600 text-white font-bold text-[10px] px-1.5 py-0.5 rounded ml-1 animate-[pulse_1.5s_ease-in-out_infinite] inline-block shadow-2xs">
+                              New
+                            </span>
+                          </p>
+                        </div>
+                        <div className="py-2.5 flex items-start gap-3">
+                          <span className="font-semibold text-slate-400 shrink-0 min-w-[78px]">{formatDate(3)}</span>
+                          <p className="text-slate-700 font-medium leading-snug">
+                            Pilot project for Water Quality Monitoring approved.
+                          </p>
+                        </div>
+                        <div className="py-[#0f2d59] py-2.5 flex items-start gap-3">
+                          <span className="font-semibold text-slate-400 shrink-0 min-w-[78px]">{formatDate(5)}</span>
+                          <p className="text-slate-700 font-medium leading-snug">
+                            5 new startups registered this week.
+                          </p>
+                        </div>
+                        <div className="py-2.5 flex items-start gap-3">
+                          <span className="font-semibold text-slate-400 shrink-0 min-w-[78px]">{formatDate(7)}</span>
+                          <p className="text-slate-700 font-medium leading-snug">
+                            Invitation for proposals – AI in Agriculture (Extended Deadline).
+                          </p>
+                        </div>
+                        <div className="py-2.5 flex items-start gap-3">
+                          <span className="font-semibold text-slate-400 shrink-0 min-w-[78px]">{formatDate(10)}</span>
+                          <p className="text-slate-700 font-medium leading-snug">
+                            Procurement process initiated for E-Health Kiosk.
+                          </p>
+                        </div>
+                      </>
+                    );
+                  })()}
+                </div>
+              </div>
+            </div>
+
+            {/* Column 2: Mantralaya Photo & State Quote Card (With Hover scale & color effect) */}
+            <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden flex flex-col sm:flex-row h-full hover:shadow-md hover:scale-[1.02] hover:border-amber-300/80 transition-all duration-200 transform cursor-pointer group">
+              <div className="w-full sm:w-1/2 relative min-h-[160px] bg-slate-100 overflow-hidden">
+                <img
+                  src="/mantralaya_mumbai.jpg"
+                  alt="Mantralaya, Mumbai"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <span className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-xs text-slate-900 text-[10px] font-bold px-2 py-0.5 rounded shadow-xs">
+                  Mantralaya, Mumbai
+                </span>
+              </div>
+              <div className="w-full sm:w-1/2 p-5 bg-[#fffbeb] group-hover:bg-[#fef3c7]/60 border-t sm:border-t-0 sm:border-l border-amber-100/80 flex flex-col justify-center space-y-2 transition-colors">
+                <span className="text-amber-600 text-3xl font-serif leading-none">&ldquo;</span>
+                <p className="text-xs sm:text-sm font-semibold text-stone-800 leading-snug font-serif">
+                  Together for a more innovative, inclusive and prosperous Maharashtra.&rdquo;
+                </p>
+                <p className="text-[11px] text-amber-800 font-medium pt-1">
+                  — Government of Maharashtra
+                </p>
+              </div>
+            </div>
+
+            {/* Column 3: Mahi - Your Assistant Card (With Hover scale & color effect) */}
+            <div 
+              onClick={() => askMahiContext('Help me understand the MahInnovate procurement process and active challenges')}
+              className="lg:col-span-3 bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/80 rounded-2xl border border-blue-200/80 hover:border-blue-400 p-5 shadow-xs hover:shadow-md hover:scale-[1.02] transition-all duration-200 transform cursor-pointer flex flex-col justify-between relative overflow-hidden group"
+            >
+              <div className="space-y-3 relative z-10">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-full bg-[#0f2d59] group-hover:bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs transition-colors">
+                    <Bot className="w-5 h-5 text-white group-hover:animate-bounce" />
+                  </div>
+                  <h3 className="font-extrabold text-slate-900 group-hover:text-blue-700 text-sm leading-tight transition-colors">
+                    Mahi – Your Assistant
+                  </h3>
+                </div>
+
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Get instant information about challenges, guidelines, procurement process and more.
+                </p>
+
+                <div className="px-4 py-2 bg-[#0f2d59] group-hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1.5 w-fit mt-2">
+                  <span>Ask Mahi</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+
+              {/* Decorative Marathi Slogan Watermark */}
+              <div className="pt-3 border-t border-blue-100/60 mt-3 flex justify-end">
+                <span className="text-[11px] font-bold text-amber-700 italic tracking-wide">
+                  &ldquo; प्रश्न विचारा, उत्तरे मिळवा ! &rdquo;
+                </span>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </section>
 
