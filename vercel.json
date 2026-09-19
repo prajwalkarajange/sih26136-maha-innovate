@@ -1,0 +1,11 @@
+{
+  "buildCommand": "node -e \"const fs=require('fs'); const {execSync}=require('child_process'); if(fs.existsSync('client')){ execSync('npm run build --prefix client', {stdio:'inherit'}); } else { execSync('npm run build', {stdio:'inherit'}); }\"",
+  "outputDirectory": "client/dist",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
