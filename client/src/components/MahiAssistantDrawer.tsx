@@ -56,16 +56,11 @@ export const MahiAssistantDrawer: React.FC = () => {
       <button
         onClick={toggleOpen}
         aria-label="Open Mahi AI Assistant"
-        className="fixed bottom-5 right-5 z-50 flex items-center gap-2.5 px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-full shadow-xl hover:shadow-2xl transition transform hover:scale-105 active:scale-95 group border-2 border-white/80"
+        title="Ask Mahi AI Assistant"
+        className="fixed bottom-4 right-4 z-40 w-12 h-12 rounded-full bg-blue-700 hover:bg-blue-800 text-white shadow-lg hover:shadow-xl transition transform hover:scale-110 active:scale-95 flex items-center justify-center border-2 border-white/90 cursor-pointer group"
       >
-        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-          <Bot className="w-5 h-5 text-white animate-bounce" />
-        </div>
-        <div className="text-left hidden sm:block">
-          <div className="text-xs font-bold leading-tight">Mahi AI Assistant</div>
-          <div className="text-[10px] text-blue-200 leading-tight">Click to ask anything</div>
-        </div>
-        <Sparkles className="w-4 h-4 text-amber-300" />
+        <Bot className="w-6 h-6 text-white group-hover:animate-bounce" />
+        <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-amber-400 rounded-full border-2 border-white" />
       </button>
     );
   }

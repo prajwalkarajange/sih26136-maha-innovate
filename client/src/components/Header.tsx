@@ -45,63 +45,28 @@ export const Header: React.FC = () => {
 
   const navLinks = [
     { to: '/', label: 'Home' },
-    { to: '/about', label: 'About Scheme' },
-    { to: '/ai-analysis', label: 'AI Requirement Analysis' },
+    { to: '/about', label: 'About' },
     { to: '/marketplace', label: 'Challenges' },
+    { to: '/#success-stories', label: 'Success Stories' },
   ];
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-2xs font-sans w-full">
-      {/* Top Official State Government Strip - Responsive & Non-overflowing */}
-      <div className="bg-[#0b1e33] text-slate-300 text-[11px] sm:text-xs px-3 sm:px-6 lg:px-8 py-1 sm:py-1.5 border-b border-slate-800 w-full">
-        <div className="w-full flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 sm:gap-2 font-normal truncate min-w-0">
-            <span className="text-amber-400 font-semibold tracking-wide shrink-0">महाराष्ट्र शासन</span>
-            <span className="text-slate-600 hidden sm:inline">|</span>
-            <span className="text-slate-200 hidden sm:inline truncate">Government of Maharashtra</span>
-            <span className="text-slate-600 hidden md:inline">|</span>
-            <span className="text-slate-400 hidden md:inline truncate">Procurement Innovation (ID 26136)</span>
-          </div>
-
-          <div className="flex items-center gap-2 text-[11px] sm:text-xs shrink-0">
-            {isAuthenticated ? (
-              <div className="flex items-center gap-1.5 text-slate-300">
-                <span className="text-slate-400 hidden sm:inline">Active:</span>
-                <span className="text-emerald-400 font-medium flex items-center gap-1">
-                  <span className={`w-1.5 h-1.5 rounded-full ${roleConfigs[role]?.dotColor}`} />
-                  <span className="truncate max-w-[120px] sm:max-w-none">{roleConfigs[role]?.label}</span>
-                </span>
-              </div>
-            ) : (
-              <Link to="/login" className="text-blue-400 hover:text-blue-300 font-medium transition">
-                Sign In
-              </Link>
-            )}
-          </div>
-        </div>
-      </div>
-
       {/* Main Navigation Bar - Starting Cleanly from Left Edge */}
-      <div className="w-full px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-6">
+      <div className="w-full px-4 sm:px-6 lg:px-8 h-15 sm:h-16 flex items-center justify-between gap-2 sm:gap-6">
         
-        {/* Left Brand */}
-        <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink-0 group min-w-0">
-          <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-white border border-amber-400/80 shadow-xs flex items-center justify-center overflow-hidden p-0.5 shrink-0 group-hover:border-amber-500 transition">
+        {/* Left Brand - Exactly Matching Reference Image */}
+        <Link to="/" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group min-w-0">
+          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white border border-amber-400/80 shadow-xs flex items-center justify-center overflow-hidden p-0.5 shrink-0 group-hover:border-amber-500 transition">
             <img
               src="/maharashtra_seal.png"
               alt="Government of Maharashtra Seal"
               className="w-full h-full object-contain rounded-full"
             />
           </div>
-          <div className="flex flex-col min-w-0">
-            <div className="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-none flex items-center gap-0.5 sm:gap-1">
-              <span className="text-[#0b3b60]">Maha</span>
-              <span className="text-blue-700">Innovate</span>
-            </div>
-            <div className="text-[10px] sm:text-xs text-slate-500 font-normal mt-0.5 leading-none hidden md:block truncate">
-              Government of Maharashtra Public Procurement Portal
-            </div>
-          </div>
+          <span className="text-base sm:text-lg font-bold text-[#0f2d59] tracking-tight leading-none group-hover:text-blue-700 transition truncate">
+            Government of Maharashtra
+          </span>
         </Link>
 
         {/* Center: Default Formal Navigation Links */}
@@ -115,7 +80,7 @@ export const Header: React.FC = () => {
                 className={`py-1 transition whitespace-nowrap ${
                   isActive
                     ? 'text-blue-700 font-semibold border-b-2 border-blue-700'
-                    : 'hover:text-blue-700'
+                    : 'text-slate-700 hover:text-blue-700'
                 }`}
               >
                 {link.label}
@@ -139,7 +104,7 @@ export const Header: React.FC = () => {
           )}
         </nav>
 
-        {/* Right Controls: Responsive Profile + Sign Out + Ask Mahi */}
+        {/* Right Controls: Desktop Login / Profile */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {isAuthenticated ? (
             /* Desktop Unified Profile & Sign Out (hidden on mobile) */
@@ -174,27 +139,12 @@ export const Header: React.FC = () => {
             <div className="hidden sm:flex items-center gap-2">
               <Link
                 to="/login"
-                className="px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold rounded-md shadow-2xs transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+                className="px-6 py-2 bg-[#1877f2] hover:bg-blue-700 text-white text-sm font-bold rounded-xl shadow-xs transition flex items-center justify-center whitespace-nowrap cursor-pointer"
               >
-                <LogIn className="w-3.5 h-3.5" />
-                <span>Sign In</span>
+                Login
               </Link>
             </div>
           )}
-
-          {/* Ask Mahi AI Assistant Button - Always Visible, Responsive */}
-          <button
-            type="button"
-            onClick={toggleOpen}
-            className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-xs font-bold transition shadow-2xs whitespace-nowrap shrink-0 cursor-pointer ${
-              isOpen
-                ? 'bg-blue-800 text-white ring-2 ring-blue-300'
-                : 'bg-blue-700 hover:bg-blue-800 text-white'
-            }`}
-          >
-            <Bot className="w-4 h-4 shrink-0" />
-            <span className="hidden sm:inline">Ask Mahi</span>
-          </button>
 
           {/* Mobile Hamburger Toggle Button (< lg) */}
           <button

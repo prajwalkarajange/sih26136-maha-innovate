@@ -62,237 +62,154 @@ export const Page01_LandingPage: React.FC = () => {
   return (
     <div className="w-full">
       {/* ============================================================== */}
-      {/* 1. HERO SECTION - Clean, Strictly Aligned Two-Column Layout    */}
+      {/* 1. HERO SECTION - Exact 1:1 Match to Reference Image           */}
       {/* ============================================================== */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/70 via-white to-slate-50 border-b border-slate-200 py-10 lg:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
-            {/* Left Column: Heading, Direct Role Logins, CTAs, Badges */}
-            <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
-              
-              {/* Government Problem Statement Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100/90 text-blue-800 rounded-full text-xs font-bold w-fit shadow-2xs border border-blue-200">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                <span>Government Problem Statement ID 26136</span>
-              </div>
+      <section 
+        className="relative w-full overflow-hidden bg-slate-900 border-b border-slate-200 lg:h-[calc(100vh-64px)] min-h-[640px] flex flex-col justify-between"
+      >
+        {/* Full Hero Background Image: gateway_bg.jpg with water and boats fully preserved */}
+        <div 
+          className="absolute inset-0 z-0 bg-no-repeat bg-cover pointer-events-none"
+          style={{
+            backgroundImage: "url('/gateway_bg.jpg')",
+            backgroundPosition: '85% 82%',
+          }}
+        />
 
-              {/* Main Branding & Catchphrase */}
-              <div className="space-y-2">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-                  <span className="text-[#0b3b60]">Maha</span>
-                  <span className="text-blue-600">Innovate</span>
-                </h1>
-                <p className="text-xl sm:text-2xl text-slate-800 font-extrabold leading-snug">
-                  Connecting Government Problems with Innovative Startup Solutions
-                </p>
-              </div>
+        {/* Soft white/sky wash overlay on the left to guarantee 100% crisp typography */}
+        <div 
+          className="absolute inset-0 z-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(90deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.92) 32%, rgba(255,255,255,0.65) 52%, rgba(255,255,255,0.15) 70%, rgba(255,255,255,0) 85%)'
+          }}
+        />
 
-              {/* Subtitle / Core Mandate */}
-              <p className="text-xs sm:text-sm text-slate-600 max-w-xl leading-relaxed">
-                A startup-friendly public procurement mechanism that enables government departments to identify, pilot, procure, and scale innovative solutions from eligible startups for the Government of Maharashtra.
-              </p>
+        {/* Vertically and horizontally centered content block in the left region */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-center py-6">
+          <div className="w-full max-w-xl lg:max-w-2xl flex flex-col items-center text-center">
+            {/* Title: MahaInnovate */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight text-[#0f2d59] leading-none mb-3.5">
+              MahaInnovate
+            </h1>
 
-              {/* Primary Dual Role Action Buttons (As shown in Reference Image Screen 1) */}
-              <div className="flex flex-wrap items-center gap-3 pt-1">
+            {/* Subtitle: Connecting Government Problems with Innovative Startup Solutions */}
+            <h2 className="text-xl sm:text-2xl lg:text-[28px] font-bold text-[#1d63ed] leading-tight mb-4">
+              Connecting Government Problems<br />with Innovative Startup Solutions
+            </h2>
+
+            {/* Paragraph: A startup-friendly public procurement mechanism... */}
+            <p className="text-sm sm:text-base lg:text-[16px] text-slate-700 font-medium leading-relaxed max-w-lg mb-6 text-center">
+              A startup-friendly public procurement mechanism to identify, pilot, procure and scale innovative solutions for a better Maharashtra.
+            </p>
+
+            {/* Action Buttons: 2 Rows, Perfectly Centered */}
+            <div className="flex flex-col items-center gap-3 w-full">
+              {/* Row 1: [ Login as Government ]  [ Login as Startup ] */}
+              <div className="flex flex-wrap items-center justify-center gap-3.5">
                 <Link
                   to="/login?role=government"
-                  className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs sm:text-sm shadow-md hover:shadow-lg transition flex items-center gap-2 cursor-pointer"
+                  className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[185px]"
                 >
-                  <Building2 className="w-4 h-4 shrink-0" />
-                  <span>Login as Government</span>
+                  Login as Government
                 </Link>
 
                 <Link
                   to="/login?role=startup"
-                  className="px-5 py-2.5 bg-white hover:bg-slate-50 text-blue-700 font-bold rounded-lg text-xs sm:text-sm border-2 border-blue-600 transition flex items-center gap-2 cursor-pointer shadow-2xs"
+                  className="px-6 py-2.5 sm:py-3 bg-white/85 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer min-w-[160px]"
                 >
-                  <Rocket className="w-4 h-4 text-blue-600 shrink-0" />
-                  <span>Login as Startup</span>
+                  Login as Startup
                 </Link>
               </div>
 
-              {/* Quick Links Row */}
-              <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-600 pt-0.5">
+              {/* Row 2: [ Register Startup ] - centered under button group */}
+              <div className="flex items-center justify-center">
                 <Link
                   to="/login?tab=register"
-                  className="text-blue-700 hover:underline flex items-center gap-1"
+                  className="px-8 py-2.5 sm:py-3 bg-white/85 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer min-w-[175px]"
                 >
-                  <span>Register Startup</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </Link>
-                <span className="text-slate-300">•</span>
-                <Link
-                  to="/ai-analysis"
-                  className="text-slate-700 hover:text-blue-600 flex items-center gap-1.5 transition"
-                >
-                  <Bot className="w-3.5 h-3.5 text-blue-600" />
-                  <span>Try AI Requirement Analysis</span>
-                </Link>
-                <span className="text-slate-300">•</span>
-                <Link
-                  to="/marketplace"
-                  className="text-slate-700 hover:text-blue-600 transition"
-                >
-                  View Live Challenges
+                  Register Startup
                 </Link>
               </div>
-
-              {/* Interactive Mahi Callout Card (Matching Reference Screen 1) */}
-              <div
-                onClick={() => askMahiContext('Help me understand the MahInnovate procurement process')}
-                className="p-3.5 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl flex items-center justify-between shadow-2xs hover:shadow-sm cursor-pointer transition group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xs">
-                    <Bot className="w-5 h-5 text-white group-hover:animate-bounce" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-slate-900">
-                      Hi! I'm Mahi 👋 <span className="font-normal text-slate-600">Need help? Ask me anything!</span>
-                    </div>
-                    <div className="text-[11px] text-blue-700 font-medium">
-                      Your AI guide for public procurement and startup registration
-                    </div>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-md shadow-xs transition shrink-0"
-                >
-                  Ask Mahi
-                </button>
-              </div>
-
-              {/* 4 Core Pillars Strip */}
-              <div className="flex flex-wrap items-center gap-2 pt-1">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold rounded-md shadow-2xs">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> Transparent
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 border border-indigo-200 text-indigo-800 text-xs font-bold rounded-md shadow-2xs">
-                  <Users className="w-3.5 h-3.5 text-indigo-600" /> Inclusive
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold rounded-md shadow-2xs">
-                  <Lightbulb className="w-3.5 h-3.5 text-amber-600" /> Innovative
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold rounded-md shadow-2xs">
-                  <Target className="w-3.5 h-3.5 text-rose-600" /> Impact Driven
-                </span>
-              </div>
-
             </div>
+          </div>
+        </div>
 
-            {/* Right Column: Gateway of India Vector Artwork & Policy Framework Card (Matching Screen 1) */}
-            <div className="lg:col-span-5 flex flex-col justify-center">
-              <div className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
-                
-                {/* Visual Header Artwork: Mumbai Gateway of India Architectural Illustration */}
-                <div className="relative bg-gradient-to-b from-sky-400 via-sky-300 to-amber-100 p-6 pt-8 pb-4 flex flex-col items-center justify-center border-b border-slate-200 overflow-hidden">
-                  
-                  {/* Subtle Sun & Cloud Accents */}
-                  <div className="absolute top-4 right-8 w-12 h-12 rounded-full bg-amber-200/80 blur-xs" />
-                  <div className="absolute top-6 right-10 w-8 h-8 rounded-full bg-amber-100" />
+        {/* Bottom Area: Tagline & 4 Value Pillars Bar Over Water */}
+        <div className="relative z-10 w-full flex flex-col items-center">
+          {/* Centered Tagline: "Innovate | Collaborate | Build a Better Maharashtra" */}
+          <div className="w-full text-center pb-2.5 px-4">
+            <p className="text-xs sm:text-sm md:text-base font-semibold text-[#0f2d59] tracking-wide drop-shadow-2xs">
+              &ldquo;Innovate | Collaborate | Build a Better Maharashtra&rdquo;
+            </p>
+          </div>
 
-                  {/* Clean SVG Vector of Mumbai's Gateway of India */}
-                  <svg viewBox="0 0 320 180" className="w-full max-w-[280px] h-auto drop-shadow-md">
-                    {/* Sky / Horizon Ground line */}
-                    <rect x="0" y="165" width="320" height="15" fill="#e2e8f0" />
-                    <rect x="0" y="160" width="320" height="5" fill="#cbd5e1" />
-
-                    {/* Gateway Base Plinth */}
-                    <rect x="40" y="150" width="240" height="10" fill="#9a3412" rx="1" />
-                    <rect x="45" y="145" width="230" height="5" fill="#c2410c" />
-
-                    {/* Left Outer Turret / Pier */}
-                    <rect x="50" y="60" width="35" height="85" fill="#b45309" />
-                    <rect x="48" y="55" width="39" height="5" fill="#92400e" />
-                    <polygon points="50,55 67.5,35 85,55" fill="#78350f" />
-                    {/* Pier Windows / Jalis */}
-                    <rect x="62" y="75" width="11" height="18" rx="5" fill="#451a03" />
-                    <rect x="62" y="105" width="11" height="18" rx="5" fill="#451a03" />
-
-                    {/* Right Outer Turret / Pier */}
-                    <rect x="235" y="60" width="35" height="85" fill="#b45309" />
-                    <rect x="233" y="55" width="39" height="5" fill="#92400e" />
-                    <polygon points="235,55 252.5,35 270,55" fill="#78350f" />
-                    {/* Pier Windows */}
-                    <rect x="247" y="75" width="11" height="18" rx="5" fill="#451a03" />
-                    <rect x="247" y="105" width="11" height="18" rx="5" fill="#451a03" />
-
-                    {/* Central Grand Gateway Body */}
-                    <rect x="85" y="50" width="150" height="95" fill="#d97706" />
-                    <rect x="80" y="45" width="160" height="5" fill="#b45309" />
-                    {/* Cornice & Parapet */}
-                    <rect x="85" y="38" width="150" height="7" fill="#92400e" />
-                    <circle cx="160" cy="30" r="14" fill="#78350f" />
-                    <polygon points="160,10 156,22 164,22" fill="#d97706" />
-
-                    {/* Central High Grand Arch */}
-                    <path
-                      d="M 125,145 L 125,95 A 35,35 0 0,1 195,95 L 195,145 Z"
-                      fill="#312e81"
-                    />
-                    <path
-                      d="M 130,145 L 130,96 A 30,30 0 0,1 190,96 L 190,145 Z"
-                      fill="#1e1b4b"
-                    />
-
-                    {/* Decorative Indian Rosette Medallion */}
-                    <circle cx="160" cy="72" r="7" fill="#fef3c7" stroke="#92400e" strokeWidth="1.5" />
-
-                    {/* Small Left Arch */}
-                    <path d="M 95,145 L 95,115 A 12,12 0 0,1 119,115 L 119,145 Z" fill="#451a03" />
-                    {/* Small Right Arch */}
-                    <path d="M 201,145 L 201,115 A 12,12 0 0,1 225,115 L 225,145 Z" fill="#451a03" />
+          {/* 4 Value Pillars Bar at Bottom */}
+          <div className="w-full bg-white/85 backdrop-blur-md border-t border-slate-200/80 shadow-xs py-3 px-4 sm:px-8">
+            <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 items-center justify-items-center">
+              
+              {/* 1. Transparent */}
+              <div className="flex items-center gap-2.5 text-[#0f2d59]">
+                <div className="w-7 h-7 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-[#0f2d59] fill-none stroke-[2.2]">
+                    <polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2" />
+                    <circle cx="12" cy="12" r="3" />
                   </svg>
-
-                  {/* Caption */}
-                  <div className="text-[11px] font-bold text-slate-800 tracking-wide mt-2">
-                    Gateway of Maharashtra Public Innovation
-                  </div>
                 </div>
-
-                {/* Policy Mechanism Breakdown */}
-                <div className="p-5 space-y-3.5">
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                    <div className="flex items-center gap-2 font-black text-slate-900 text-xs sm:text-sm">
-                      <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                      <span>Policy ID 26136 Rules</span>
-                    </div>
-                    <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full">
-                      Maharashtra Norms
-                    </span>
-                  </div>
-
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
-                    <div className="font-bold text-slate-900">Direct Procurement Exemption</div>
-                    <p className="text-[11px] text-slate-600 leading-relaxed">
-                      Startups whose pilot achieves a validated score of <strong>&gt; 85%</strong> qualify for direct procurement purchase orders without open re-tendering.
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 text-center font-semibold text-xs">
-                    <div className="p-2.5 bg-blue-50 rounded-xl border border-blue-100">
-                      <div className="text-blue-900 font-black text-lg">90 Days</div>
-                      <div className="text-[10px] text-blue-700">Controlled Field Pilot</div>
-                    </div>
-                    <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-100">
-                      <div className="text-emerald-900 font-black text-lg">100%</div>
-                      <div className="text-[10px] text-emerald-700">Audit Traceability</div>
-                    </div>
-                  </div>
-
-                  <div className="pt-1 flex items-center justify-between text-[11px] text-slate-500 font-medium">
-                    <span>Nodal Agency: Urban Development Dept</span>
-                    <Link to="/about" className="text-blue-600 hover:underline font-bold">
-                      Read Policy Details →
-                    </Link>
-                  </div>
-                </div>
-
+                <span className="font-bold text-sm sm:text-base tracking-tight">Transparent</span>
               </div>
-            </div>
 
+              {/* 2. Inclusive */}
+              <div className="flex items-center gap-2.5 text-[#0f2d59]">
+                <div className="w-7 h-7 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-[#0f2d59] fill-none stroke-[2]">
+                    <circle cx="12" cy="12" r="2.5" fill="#0f2d59" />
+                    <circle cx="6" cy="7" r="2" fill="#0f2d59" />
+                    <circle cx="18" cy="7" r="2" fill="#0f2d59" />
+                    <circle cx="6" cy="17" r="2" fill="#0f2d59" />
+                    <circle cx="18" cy="17" r="2" fill="#0f2d59" />
+                    <line x1="12" y1="12" x2="6" y2="7" />
+                    <line x1="12" y1="12" x2="18" y2="7" />
+                    <line x1="12" y1="12" x2="6" y2="17" />
+                    <line x1="12" y1="12" x2="18" y2="17" />
+                  </svg>
+                </div>
+                <span className="font-bold text-sm sm:text-base tracking-tight">Inclusive</span>
+              </div>
+
+              {/* 3. Innovative */}
+              <div className="flex items-center gap-2.5 text-[#0f2d59]">
+                <div className="w-7 h-7 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-[#0f2d59] fill-none stroke-[2.2]" strokeLinecap="round">
+                    <circle cx="12" cy="12" r="4" />
+                    <line x1="12" y1="2" x2="12" y2="5" />
+                    <line x1="12" y1="19" x2="12" y2="22" />
+                    <line x1="2" y1="12" x2="5" y2="12" />
+                    <line x1="19" y1="12" x2="22" y2="12" />
+                    <line x1="4.93" y1="4.93" x2="7.05" y2="7.05" />
+                    <line x1="16.95" y1="16.95" x2="19.07" y2="19.07" />
+                    <line x1="4.93" y1="19.07" x2="7.05" y2="16.95" />
+                    <line x1="16.95" y1="7.05" x2="19.07" y2="4.93" />
+                  </svg>
+                </div>
+                <span className="font-bold text-sm sm:text-base tracking-tight">Innovative</span>
+              </div>
+
+              {/* 4. Impact Driven */}
+              <div className="flex items-center gap-2.5 text-[#0f2d59]">
+                <div className="w-7 h-7 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-[#0f2d59] fill-none stroke-[2.2]">
+                    <circle cx="12" cy="12" r="8" />
+                    <circle cx="12" cy="12" r="3" />
+                    <line x1="12" y1="2" x2="12" y2="6" strokeLinecap="round" />
+                    <line x1="12" y1="18" x2="12" y2="22" strokeLinecap="round" />
+                    <line x1="2" y1="12" x2="6" y2="12" strokeLinecap="round" />
+                    <line x1="18" y1="12" x2="22" y2="12" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <span className="font-bold text-sm sm:text-base tracking-tight">Impact Driven</span>
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
@@ -371,6 +288,98 @@ export const Page01_LandingPage: React.FC = () => {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* ============================================================== */}
+      {/* SUCCESS STORIES SECTION (#success-stories)                     */}
+      {/* ============================================================== */}
+      <section id="success-stories" className="py-12 lg:py-16 bg-slate-50/70 border-t border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-10 space-y-1.5">
+            <span className="text-xs font-bold text-blue-700 uppercase tracking-widest">
+              Statewide Public Procurement Success
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+              Government Innovation Success Stories
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500">
+              Validated startup pilots that transitioned into direct procurement orders and statewide replication
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                dept: 'Nashik Municipal Corporation',
+                title: 'Automated IoT Canal Leakage & Pressure Sensing',
+                startup: 'AquaSense Labs (DPIIT Reg)',
+                score: '92.4%',
+                badge: 'Scaled Statewide',
+                badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+                metric: '34% Water Loss Cut',
+                desc: 'Deployed real-time acoustic sensors across 42km distribution lines, saving 18 MLD potable water in trial sector.',
+                po: 'PO-NMC-2025-081',
+              },
+              {
+                dept: 'Public Health Dept (Gadchiroli & Amravati)',
+                title: 'Portable AI Retinal Screening in Tribal PHCs',
+                startup: 'NetraVision Health (DPIIT Reg)',
+                score: '94.8%',
+                badge: 'Direct PO Issued',
+                badgeColor: 'bg-blue-100 text-blue-800 border-blue-200',
+                metric: '12,400+ Screenings',
+                desc: 'Offline-first smartphone fundus camera deployed at 18 remote PHCs with 98.2% diagnostic concordance.',
+                po: 'PO-PHD-2025-144',
+              },
+              {
+                dept: 'Pune Smart City (PSCDCL)',
+                title: 'Adaptive AI Corridor Signal Optimization',
+                startup: 'UrbanSync Mobility (DPIIT Reg)',
+                score: '89.6%',
+                badge: 'Pilot Validated',
+                badgeColor: 'bg-purple-100 text-purple-800 border-purple-200',
+                metric: '22% Congestion Cut',
+                desc: 'Computer vision camera loop tuning signal cycles dynamically, cutting peak transit wait on 6 high-density junctions.',
+                po: 'PO-PSC-2026-029',
+              },
+            ].map((story, i) => (
+              <div
+                key={i}
+                className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs hover:border-blue-300 hover:shadow-md transition flex flex-col justify-between space-y-4"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[11px] font-bold text-slate-500 truncate flex items-center gap-1">
+                      <Building2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                      <span className="truncate">{story.dept}</span>
+                    </span>
+                    <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border shrink-0 ${story.badgeColor}`}>
+                      {story.badge}
+                    </span>
+                  </div>
+
+                  <h3 className="text-base font-bold text-slate-900 leading-snug">{story.title}</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">{story.desc}</p>
+                </div>
+
+                <div className="pt-3 border-t border-slate-100 space-y-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-slate-500">Evaluator Score:</span>
+                    <span className="font-extrabold text-emerald-600">{story.score}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-slate-500">Key Outcome:</span>
+                    <span className="font-bold text-slate-900">{story.metric}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-50">
+                    <span>{story.startup}</span>
+                    <span className="font-mono text-[10px] text-blue-600 font-semibold">{story.po}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
