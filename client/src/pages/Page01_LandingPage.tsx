@@ -29,7 +29,7 @@ import {
 
 export const Page01_LandingPage: React.FC = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, role } = useAuth();
+  const { isAuthenticated, role, user } = useAuth();
   const { askMahiContext } = useMahi();
 
   const activeChallenges = [
@@ -105,34 +105,99 @@ export const Page01_LandingPage: React.FC = () => {
               A startup-friendly public procurement mechanism to identify, pilot, procure and scale innovative solutions for a better Maharashtra.
             </p>
 
-            {/* Action Buttons: 2 Rows, Perfectly Centered */}
+            {/* Action Buttons: Role-Aware & Session-Locked */}
             <div className="flex flex-col items-center gap-3 w-full">
-              {/* Row 1: [ Login as Government ]  [ Login as Startup ] */}
-              <div className="flex flex-wrap items-center justify-center gap-3.5">
-                <Link
-                  to="/login?role=government"
-                  className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[185px]"
-                >
-                  Login as Government
-                </Link>
+              {isAuthenticated ? (
+                /* Authenticated User Session Action Options */
+                <div className="flex flex-col items-center gap-2.5 w-full">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-blue-100/90 text-[#0f2d59] border border-blue-200 rounded-full text-xs font-bold shadow-2xs">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>Active Session: <strong>{user?.name}</strong> ({role === 'government' ? 'Government Officer' : role === 'startup' ? 'Startup Founder' : role === 'evaluator' ? 'Technical Evaluator' : 'System Administrator'})</span>
+                  </div>
 
-                <Link
-                  to="/login?role=startup"
-                  className="px-6 py-2.5 sm:py-3 bg-white/85 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer min-w-[160px]"
-                >
-                  Login as Startup
-                </Link>
-              </div>
+                  <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+                    {role === 'government' && (
+                      <>
+                        <Link
+                          to="/dashboard"
+                          className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[200px]"
+                        >
+                          Go to Officer Dashboard
+                        </Link>
+                        <Link
+                          to="/challenge/new"
+                          className="px-6 py-2.5 sm:py-3 bg-white/90 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer"
+                        >
+                          Create New Challenge
+                        </Link>
+                      </>
+                    )}
 
-              {/* Row 2: [ Register Startup ] - centered under button group */}
-              <div className="flex items-center justify-center">
-                <Link
-                  to="/login?tab=register"
-                  className="px-8 py-2.5 sm:py-3 bg-white/85 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer min-w-[175px]"
-                >
-                  Register Startup
-                </Link>
-              </div>
+                    {role === 'startup' && (
+                      <>
+                        <Link
+                          to="/marketplace"
+                          className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[200px]"
+                        >
+                          Go to Startup Workspace
+                        </Link>
+                        <Link
+                          to="/marketplace"
+                          className="px-6 py-2.5 sm:py-3 bg-white/90 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer"
+                        >
+                          Browse Active Challenges
+                        </Link>
+                      </>
+                    )}
+
+                    {role === 'evaluator' && (
+                      <Link
+                        to="/evaluations/1"
+                        className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[220px]"
+                      >
+                        Go to Evaluation Panel
+                      </Link>
+                    )}
+
+                    {role === 'admin' && (
+                      <Link
+                        to="/admin"
+                        className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[220px]"
+                      >
+                        Go to Admin Console
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                /* Unauthenticated Guest Actions */
+                <>
+                  <div className="flex flex-wrap items-center justify-center gap-3.5">
+                    <Link
+                      to="/login?role=government"
+                      className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[185px]"
+                    >
+                      Login as Government
+                    </Link>
+
+                    <Link
+                      to="/login?role=startup"
+                      className="px-6 py-2.5 sm:py-3 bg-white/85 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer min-w-[160px]"
+                    >
+                      Login as Startup
+                    </Link>
+                  </div>
+
+                  <div className="flex items-center justify-center">
+                    <Link
+                      to="/login?tab=register"
+                      className="px-8 py-2.5 sm:py-3 bg-white/85 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer min-w-[175px]"
+                    >
+                      Register Startup
+                    </Link>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -223,7 +288,7 @@ export const Page01_LandingPage: React.FC = () => {
       <section className="bg-slate-50/70 border-b border-slate-200 py-10 lg:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           
-          {/* 1. TOP 4 QUICK NAVIGATION CARDS */}
+          {/* 1. TOP 4 QUICK NAVIGATION CARDS - Role Aware */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {/* Card 1: Government Challenges */}
             <Link
@@ -248,9 +313,14 @@ export const Page01_LandingPage: React.FC = () => {
               </div>
             </Link>
 
-            {/* Card 2: Startup Opportunities */}
+            {/* Card 2: Dynamic Role Card */}
             <Link
-              to="/login?role=startup"
+              to={
+                !isAuthenticated ? '/login?role=startup' :
+                role === 'government' ? '/marketplace' :
+                role === 'evaluator' ? '/evaluations/1' :
+                role === 'admin' ? '/admin' : '/marketplace'
+              }
               className="p-5 rounded-2xl bg-[#fff7ed] hover:bg-[#ffedd5] border border-amber-100/90 shadow-2xs hover:shadow-md hover:scale-[1.03] transition-all duration-200 transform group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-start justify-between gap-3">
@@ -263,17 +333,25 @@ export const Page01_LandingPage: React.FC = () => {
               </div>
               <div className="mt-4 space-y-1">
                 <h3 className="font-extrabold text-[#0f2d59] text-base leading-tight">
-                  Startup Opportunities <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">स्टार्टअप संधी</span>
+                  {role === 'government' ? 'Startup Solutions' : 'Startup Opportunities'}{' '}
+                  <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">
+                    {role === 'government' ? 'स्टार्टअप उपाय' : 'स्टार्टअप संधी'}
+                  </span>
                 </h3>
                 <p className="text-xs text-slate-600 leading-relaxed pt-1">
-                  Discover opportunities to collaborate with Government
+                  {role === 'government' ? 'Review innovative solutions submitted by startups' : 'Discover opportunities to collaborate with Government'}
                 </p>
               </div>
             </Link>
 
-            {/* Card 3: Submit Proposal */}
+            {/* Card 3: Dynamic Role Card */}
             <Link
-              to="/login?role=startup"
+              to={
+                !isAuthenticated ? '/login?role=startup' :
+                role === 'government' ? '/challenge/new' :
+                role === 'evaluator' ? '/evaluations/1' :
+                role === 'admin' ? '/admin' : '/marketplace'
+              }
               className="p-5 rounded-2xl bg-[#f0fdf4] hover:bg-[#dcfce7] border border-emerald-100/90 shadow-2xs hover:shadow-md hover:scale-[1.03] transition-all duration-200 transform group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-start justify-between gap-3">
@@ -286,17 +364,25 @@ export const Page01_LandingPage: React.FC = () => {
               </div>
               <div className="mt-4 space-y-1">
                 <h3 className="font-extrabold text-[#0f2d59] text-base leading-tight">
-                  Submit Proposal <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">प्रस्ताव सादर करा</span>
+                  {role === 'government' ? 'Create Challenge' : 'Submit Proposal'}{' '}
+                  <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">
+                    {role === 'government' ? 'आव्हाने तयार करा' : 'प्रस्ताव सादर करा'}
+                  </span>
                 </h3>
                 <p className="text-xs text-slate-600 leading-relaxed pt-1">
-                  Share your innovative solution for a challenge
+                  {role === 'government' ? 'Formulate and post new department challenge' : 'Share your innovative solution for a challenge'}
                 </p>
               </div>
             </Link>
 
-            {/* Card 4: Track Application */}
+            {/* Card 4: Dynamic Role Card */}
             <Link
-              to="/login"
+              to={
+                !isAuthenticated ? '/login' :
+                role === 'government' ? '/dashboard' :
+                role === 'evaluator' ? '/evaluations/1' :
+                role === 'admin' ? '/admin' : '/marketplace'
+              }
               className="p-5 rounded-2xl bg-[#f5f3ff] hover:bg-[#ede9fe] border border-purple-100/90 shadow-2xs hover:shadow-md hover:scale-[1.03] transition-all duration-200 transform group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-start justify-between gap-3">
@@ -309,10 +395,13 @@ export const Page01_LandingPage: React.FC = () => {
               </div>
               <div className="mt-4 space-y-1">
                 <h3 className="font-extrabold text-[#0f2d59] text-base leading-tight">
-                  Track Application <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">अर्जाचा मागोवा घ्या</span>
+                  {role === 'government' ? 'Department Workspace' : 'Track Application'}{' '}
+                  <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">
+                    {role === 'government' ? 'विभाग कार्यक्षेत्र' : 'अर्जाचा मागोवा घ्या'}
+                  </span>
                 </h3>
                 <p className="text-xs text-slate-600 leading-relaxed pt-1">
-                  Check the status of your proposal, pilot or procurement
+                  {role === 'government' ? 'Monitor active pilot evaluations and approvals' : 'Check the status of your proposal, pilot or procurement'}
                 </p>
               </div>
             </Link>
@@ -812,10 +901,15 @@ export const Page01_LandingPage: React.FC = () => {
                   <div className="font-extrabold text-slate-900 text-sm">{ch.budget}</div>
                 </div>
                 <Link
-                  to="/login?role=startup"
+                  to={
+                    !isAuthenticated ? '/login?role=startup' :
+                    role === 'government' ? '/dashboard' :
+                    role === 'evaluator' ? '/evaluations/1' :
+                    role === 'admin' ? '/admin' : '/marketplace'
+                  }
                   className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-xs transition flex items-center gap-1 cursor-pointer"
                 >
-                  <span>Apply / Pilot</span>
+                  <span>{role === 'government' ? 'View Dashboard' : 'Apply / Pilot'}</span>
                   <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
