@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useMahi } from '../context/MahiContext';
@@ -20,17 +20,71 @@ import {
   Search,
   Check,
   ChevronRight,
+  ChevronLeft,
   FileCheck2,
   Layers,
   FileText,
   BarChart3,
-  Settings
+  Settings,
+  Globe,
+  Calendar,
+  HelpCircle,
+  Share2
 } from 'lucide-react';
 
 export const Page01_LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated, role, user } = useAuth();
   const { askMahiContext } = useMahi();
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchCategory, setSearchCategory] = useState('ALL');
+
+  // Automatic Landmark Background Slider State
+  const heroSlides = [
+    {
+      url: '/india_gate.jpg',
+      title: 'India Gate, New Delhi',
+    },
+    {
+      url: '/mantralaya_mumbai.jpg',
+      title: 'Mantralaya, Government of Maharashtra, Mumbai',
+    },
+    {
+      url: '/gateway_bg.jpg',
+      title: 'Gateway of India, Mumbai',
+    },
+    {
+      url: '/gateway_view_from_sea.jpg',
+      title: 'Gateway of India (Harbor View), Mumbai',
+    },
+  ];
+
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlideIndex((prev) => (prev + 1) % heroSlides.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [heroSlides.length]);
+
+  const handleNextSlide = () => {
+    setCurrentSlideIndex((prev) => (prev + 1) % heroSlides.length);
+  };
+
+  const handlePrevSlide = () => {
+    setCurrentSlideIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/marketplace?search=${encodeURIComponent(searchQuery)}`);
+    } else {
+      navigate('/marketplace');
+    }
+  };
 
   const activeChallenges = [
     {
@@ -63,162 +117,290 @@ export const Page01_LandingPage: React.FC = () => {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full font-sans">
       {/* ============================================================== */}
-      {/* 1. HERO SECTION - Exact 1:1 Match to Reference Image           */}
+      {/* 1. HERO SECTION - Exact Visual Match to India.gov.in Portal     */}
       {/* ============================================================== */}
       <section 
-        className="relative w-full overflow-hidden bg-slate-900 border-b border-slate-200 lg:h-[calc(100vh-64px)] min-h-[640px] flex flex-col justify-between"
+        className="relative w-full overflow-hidden bg-[#07182c] text-white border-b border-slate-700 min-h-[620px] lg:min-h-[680px] flex flex-col justify-between"
       >
-        {/* Full Hero Background Image: gateway_bg.jpg with water and boats fully preserved */}
-        <div 
-          className="absolute inset-0 z-0 bg-no-repeat bg-cover pointer-events-none"
-          style={{
-            backgroundImage: "url('/gateway_bg.jpg')",
-            backgroundPosition: '85% 82%',
-          }}
-        />
+        {/* Automatic Background Image Slider with Bright & Faint Layering */}
+        {heroSlides.map((slide, idx) => (
+          <div
+            key={slide.url}
+            className={`absolute inset-0 z-0 bg-no-repeat bg-cover bg-center pointer-events-none transition-all duration-1000 ease-in-out transform ${
+              idx === currentSlideIndex ? 'opacity-75 scale-100' : 'opacity-0 scale-105'
+            }`}
+            style={{
+              backgroundImage: `url('${slide.url}')`,
+            }}
+          />
+        ))}
 
-        {/* Soft white/sky wash overlay on the left to guarantee 100% crisp typography */}
+        {/* Faint, transparent blue gradient wash so background image is bright & clearly visible */}
         <div 
           className="absolute inset-0 z-0 pointer-events-none"
           style={{
-            background: 'linear-gradient(90deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.92) 32%, rgba(255,255,255,0.65) 52%, rgba(255,255,255,0.15) 70%, rgba(255,255,255,0) 85%)'
+            background: 'linear-gradient(180deg, rgba(12,38,71,0.45) 0%, rgba(15,55,102,0.35) 50%, rgba(7,24,44,0.68) 100%)'
           }}
         />
 
-        {/* Vertically and horizontally centered content block in the left region */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-center py-6">
-          <div className="w-full max-w-xl lg:max-w-2xl flex flex-col items-center text-center">
-            {/* Title: MahaInnovate */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight text-[#0f2d59] leading-none mb-3.5">
-              MahaInnovate
-            </h1>
-
-            {/* Subtitle: Connecting Government Problems with Innovative Startup Solutions */}
-            <h2 className="text-xl sm:text-2xl lg:text-[28px] font-bold text-[#1d63ed] leading-tight mb-4">
-              Connecting Government Problems<br />with Innovative Startup Solutions
-            </h2>
-
-            {/* Paragraph: A startup-friendly public procurement mechanism... */}
-            <p className="text-sm sm:text-base lg:text-[16px] text-slate-700 font-medium leading-relaxed max-w-lg mb-6 text-center">
-              A startup-friendly public procurement mechanism to identify, pilot, procure and scale innovative solutions for a better Maharashtra.
-            </p>
-
-            {/* Action Buttons: Role-Aware & Session-Locked */}
-            <div className="flex flex-col items-center gap-3 w-full">
-              {isAuthenticated ? (
-                /* Authenticated User Session Action Options */
-                <div className="flex flex-col items-center gap-2.5 w-full">
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-blue-100/90 text-[#0f2d59] border border-blue-200 rounded-full text-xs font-bold shadow-2xs">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>Active Session: <strong>{user?.name}</strong> ({role === 'government' ? 'Government Officer' : role === 'startup' ? 'Startup Founder' : role === 'evaluator' ? 'Technical Evaluator' : 'System Administrator'})</span>
-                  </div>
-
-                  <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
-                    {role === 'government' && (
-                      <>
-                        <Link
-                          to="/dashboard"
-                          className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[200px]"
-                        >
-                          Go to Officer Dashboard
-                        </Link>
-                        <Link
-                          to="/challenge/new"
-                          className="px-6 py-2.5 sm:py-3 bg-white/90 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer"
-                        >
-                          Create New Challenge
-                        </Link>
-                      </>
-                    )}
-
-                    {role === 'startup' && (
-                      <>
-                        <Link
-                          to="/marketplace"
-                          className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[200px]"
-                        >
-                          Go to Startup Workspace
-                        </Link>
-                        <Link
-                          to="/marketplace"
-                          className="px-6 py-2.5 sm:py-3 bg-white/90 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer"
-                        >
-                          Browse Active Challenges
-                        </Link>
-                      </>
-                    )}
-
-                    {role === 'evaluator' && (
-                      <Link
-                        to="/evaluations/1"
-                        className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[220px]"
-                      >
-                        Go to Evaluation Panel
-                      </Link>
-                    )}
-
-                    {role === 'admin' && (
-                      <Link
-                        to="/admin"
-                        className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[220px]"
-                      >
-                        Go to Admin Console
-                      </Link>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                /* Unauthenticated Guest Actions */
-                <>
-                  <div className="flex flex-wrap items-center justify-center gap-3.5">
-                    <Link
-                      to="/login?role=government"
-                      className="px-6 py-2.5 sm:py-3 bg-[#1877f2] hover:bg-blue-700 text-white font-bold text-sm sm:text-base rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 text-center cursor-pointer min-w-[185px]"
-                    >
-                      Login as Government
-                    </Link>
-
-                    <Link
-                      to="/login?role=startup"
-                      className="px-6 py-2.5 sm:py-3 bg-white/85 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer min-w-[160px]"
-                    >
-                      Login as Startup
-                    </Link>
-                  </div>
-
-                  <div className="flex items-center justify-center">
-                    <Link
-                      to="/login?tab=register"
-                      className="px-8 py-2.5 sm:py-3 bg-white/85 hover:bg-white text-[#1877f2] hover:text-blue-700 font-bold text-sm sm:text-base rounded-xl border-2 border-[#1877f2] shadow-sm hover:shadow-md transition-all transform active:scale-95 text-center cursor-pointer min-w-[175px]"
-                    >
-                      Register Startup
-                    </Link>
-                  </div>
-                </>
-              )}
+        {/* Top Utility Header inside Hero (Right-Aligned) */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 flex items-center justify-end">
+          <div className="flex items-center gap-3 sm:gap-5 text-xs text-slate-200 font-medium">
+            <a href="#main-content" className="hover:text-white transition">Skip to main content</a>
+            <span className="text-slate-500">|</span>
+            <Calendar className="w-4 h-4 text-slate-300 hover:text-white cursor-pointer transition" />
+            <span className="text-slate-500">|</span>
+            <span className="cursor-pointer hover:text-white transition flex items-center gap-1">
+              <span className="w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center text-[10px] font-bold">♿</span>
+            </span>
+            <span className="text-slate-500">|</span>
+            <span className="cursor-pointer hover:text-white transition font-bold">अ/A</span>
+            <span className="text-slate-500">|</span>
+            <div className="w-6 h-4 bg-amber-500 flex flex-col overflow-hidden rounded-xs border border-white/30" title="Government of India / Maharashtra">
+              <div className="h-1/3 bg-[#ff9933]" />
+              <div className="h-1/3 bg-white flex items-center justify-center"><div className="w-1 h-1 rounded-full bg-[#000080]" /></div>
+              <div className="h-1/3 bg-[#138808]" />
             </div>
           </div>
         </div>
 
-        {/* Bottom Area: Tagline & 4 Value Pillars Bar Over Water */}
+        {/* Vertically Centered Main Hero Content */}
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-center items-center text-center py-8 space-y-6">
+          
+          {/* Emblem & Seal */}
+          <div className="flex flex-col items-center space-y-1.5">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/90 border-2 border-amber-400 p-1 shadow-lg flex items-center justify-center overflow-hidden">
+              <img
+                src="/maharashtra_seal.png"
+                alt="Government of Maharashtra Seal"
+                className="w-full h-full object-contain rounded-full"
+              />
+            </div>
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-300 drop-shadow-sm">
+              सत्यमेव जयते | Government of Maharashtra
+            </span>
+          </div>
+
+          {/* Main Title matching india.gov.in styling */}
+          <div className="space-y-2">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-none font-sans drop-shadow-md">
+              mahainnovate<span className="text-emerald-400 font-extrabold text-3xl sm:text-4xl lg:text-5xl">.gov.in</span>
+            </h1>
+            <p className="text-base sm:text-lg font-bold text-slate-100 tracking-wide drop-shadow-sm">
+              National Innovation & Procurement Portal of Maharashtra
+            </p>
+            <p className="text-xs sm:text-sm text-slate-200 font-medium max-w-xl mx-auto leading-relaxed drop-shadow-xs">
+              Where Government Challenges & Innovative Startup Solutions Converge
+            </p>
+          </div>
+
+          {/* Centered Search Engine Bar matching india.gov.in */}
+          <form onSubmit={handleSearchSubmit} className="w-full max-w-3xl bg-white rounded-2xl p-1.5 sm:p-2 shadow-2xl border border-slate-200/80 flex flex-col sm:flex-row items-center gap-2">
+            <div className="relative flex-1 w-full flex items-center pl-3">
+              <Search className="w-5 h-5 text-slate-400 shrink-0" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search for challenges, startups, pilot projects, department requirements..."
+                className="w-full pl-3 pr-3 py-3 bg-transparent text-slate-900 text-xs sm:text-sm font-medium focus:outline-hidden placeholder:text-slate-400"
+              />
+            </div>
+
+            <div className="w-full sm:w-auto border-t sm:border-t-0 sm:border-l border-slate-200 pt-2 sm:pt-0 sm:pl-2 flex items-center gap-2 justify-between">
+              <select
+                value={searchCategory}
+                onChange={(e) => setSearchCategory(e.target.value)}
+                className="px-3 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-xl border border-slate-200 outline-none cursor-pointer"
+              >
+                <option value="ALL">All Categories</option>
+                <option value="CHALLENGES">Government Challenges</option>
+                <option value="STARTUPS">Startup Solutions</option>
+                <option value="PILOTS">Active Pilots</option>
+                <option value="PROCUREMENT">Procurement POs</option>
+              </select>
+
+              <button
+                type="submit"
+                className="px-6 py-3 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-extrabold text-sm rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-95 cursor-pointer whitespace-nowrap min-w-[110px]"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+
+          {/* Trending Searches Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-2 text-xs pt-1">
+            <span className="font-bold text-slate-200 drop-shadow-xs">Trending Searches :</span>
+            {[
+              { label: 'Smart Waste Management', path: '/marketplace?search=waste' },
+              { label: 'Rural Healthcare', path: '/marketplace?search=health' },
+              { label: 'AI Traffic Flow', path: '/marketplace?search=traffic' },
+              { label: 'Register Startup', path: '/login?tab=register' },
+              { label: 'Submit Proposal', path: '/marketplace' },
+            ].map((trend) => (
+              <Link
+                key={trend.label}
+                to={trend.path}
+                className="px-3 py-1 bg-white/20 hover:bg-white/30 border border-white/40 text-white rounded-lg text-xs font-medium transition backdrop-blur-xs cursor-pointer shadow-2xs"
+              >
+                {trend.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Active Session Status if Logged In */}
+          {isAuthenticated ? (
+            <div className="pt-2">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-900/80 text-white border border-blue-400/40 rounded-full text-xs font-bold shadow-md backdrop-blur-md">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Active Session: <strong>{user?.name}</strong> ({role === 'government' ? 'Government Officer' : role === 'startup' ? 'Startup Founder' : role === 'evaluator' ? 'Technical Evaluator' : 'System Administrator'})</span>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+              <Link
+                to="/login?role=government"
+                className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-md transition transform active:scale-95 cursor-pointer"
+              >
+                Login as Government
+              </Link>
+              <Link
+                to="/login?role=startup"
+                className="px-5 py-2.5 bg-white/20 hover:bg-white/30 text-white font-bold text-xs rounded-xl border border-white/40 shadow-sm transition transform active:scale-95 cursor-pointer backdrop-blur-xs"
+              >
+                Login as Startup
+              </Link>
+              <Link
+                to="/login?tab=register"
+                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition transform active:scale-95 cursor-pointer"
+              >
+                Register Startup
+              </Link>
+            </div>
+          )}
+
+        </div>
+
+        {/* Background Image Slider Navigation Controls & Landmark Title Pill */}
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-3 w-full flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div className="flex items-center gap-3 bg-slate-900/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-xs text-white shadow-lg">
+            <button
+              type="button"
+              onClick={handlePrevSlide}
+              className="p-1 hover:bg-white/20 rounded-full transition cursor-pointer text-slate-200 hover:text-white"
+              title="Previous Image"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-1.5">
+              {heroSlides.map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={() => setCurrentSlideIndex(dotIdx)}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    dotIdx === currentSlideIndex ? 'w-6 bg-amber-400' : 'w-2 bg-white/50 hover:bg-white'
+                  }`}
+                  title={`Go to slide ${dotIdx + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={handleNextSlide}
+              className="p-1 hover:bg-white/20 rounded-full transition cursor-pointer text-slate-200 hover:text-white"
+              title="Next Image"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+
+            <span className="text-[11px] font-semibold text-amber-300 pl-1 border-l border-white/20">
+              📍 {heroSlides[currentSlideIndex].title}
+            </span>
+          </div>
+
+          <div className="text-[11px] text-slate-300 font-medium">
+            Slide {currentSlideIndex + 1} of {heroSlides.length}
+          </div>
+        </div>
+
+        {/* Right Translucent Floating Dock Toolbar */}
+        <div className="fixed right-3 top-1/3 z-40 bg-slate-900/85 backdrop-blur-md rounded-2xl p-2 border border-white/20 flex flex-col gap-3.5 text-white shadow-2xl">
+          <button
+            type="button"
+            onClick={() => askMahiContext('Help me navigate MahInnovate portal', 'landing')}
+            className="p-2 hover:bg-white/20 rounded-xl transition text-blue-400 hover:text-white cursor-pointer group relative"
+            title="Ask Mahi AI Assistant"
+          >
+            <Bot className="w-5 h-5" />
+            <span className="absolute right-12 top-1 bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+              Mahi AI Assistant
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => navigate('/about')}
+            className="p-2 hover:bg-white/20 rounded-xl transition text-emerald-400 hover:text-white cursor-pointer group relative"
+            title="Guidelines & Help"
+          >
+            <HelpCircle className="w-5 h-5" />
+            <span className="absolute right-12 top-1 bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+              Guidelines & Help
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => navigate('/marketplace')}
+            className="p-2 hover:bg-white/20 rounded-xl transition text-amber-400 hover:text-white cursor-pointer group relative"
+            title="Important Deadlines"
+          >
+            <Calendar className="w-5 h-5" />
+            <span className="absolute right-12 top-1 bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+              Important Deadlines
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              if (navigator.share) {
+                navigator.share({ title: 'MahInnovate Portal', url: window.location.href });
+              } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Portal link copied to clipboard!');
+              }
+            }}
+            className="p-2 hover:bg-white/20 rounded-xl transition text-purple-400 hover:text-white cursor-pointer group relative"
+            title="Share Portal"
+          >
+            <Share2 className="w-5 h-5" />
+            <span className="absolute right-12 top-1 bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+              Share Portal
+            </span>
+          </button>
+        </div>
+
+        {/* Bottom Tagline & 4 Value Pillars Bar Over Dusk Background */}
         <div className="relative z-10 w-full flex flex-col items-center">
-          {/* Centered Tagline: "Innovate | Collaborate | Build a Better Maharashtra" */}
           <div className="w-full text-center pb-2.5 px-4">
-            <p className="text-xs sm:text-sm md:text-base font-semibold text-[#0f2d59] tracking-wide drop-shadow-2xs">
+            <p className="text-xs sm:text-sm font-semibold text-slate-100 tracking-wide drop-shadow-md">
               &ldquo;Innovate | Collaborate | Build a Better Maharashtra&rdquo;
             </p>
           </div>
 
-          {/* 4 Value Pillars Bar at Bottom */}
-          <div className="w-full bg-white/85 backdrop-blur-md border-t border-slate-200/80 shadow-xs py-3 px-4 sm:px-8">
+          <div className="w-full bg-slate-900/80 backdrop-blur-md border-t border-slate-700/80 shadow-xs py-3 px-4 sm:px-8">
             <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 items-center justify-items-center">
               
-              {/* 1. Transparent */}
-              <div className="flex items-center gap-2.5 text-[#0f2d59]">
+              <div className="flex items-center gap-2.5 text-white">
                 <div className="w-7 h-7 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-[#0f2d59] fill-none stroke-[2.2]">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-cyan-400 fill-none stroke-[2.2]">
                     <polygon points="12 2 21 7 21 17 12 22 3 17 3 7 12 2" />
                     <circle cx="12" cy="12" r="3" />
                   </svg>
@@ -226,15 +408,14 @@ export const Page01_LandingPage: React.FC = () => {
                 <span className="font-bold text-sm sm:text-base tracking-tight">Transparent</span>
               </div>
 
-              {/* 2. Inclusive */}
-              <div className="flex items-center gap-2.5 text-[#0f2d59]">
+              <div className="flex items-center gap-2.5 text-white">
                 <div className="w-7 h-7 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-[#0f2d59] fill-none stroke-[2]">
-                    <circle cx="12" cy="12" r="2.5" fill="#0f2d59" />
-                    <circle cx="6" cy="7" r="2" fill="#0f2d59" />
-                    <circle cx="18" cy="7" r="2" fill="#0f2d59" />
-                    <circle cx="6" cy="17" r="2" fill="#0f2d59" />
-                    <circle cx="18" cy="17" r="2" fill="#0f2d59" />
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-amber-400 fill-none stroke-[2]">
+                    <circle cx="12" cy="12" r="2.5" fill="#f59e0b" />
+                    <circle cx="6" cy="7" r="2" fill="#f59e0b" />
+                    <circle cx="18" cy="7" r="2" fill="#f59e0b" />
+                    <circle cx="6" cy="17" r="2" fill="#f59e0b" />
+                    <circle cx="18" cy="17" r="2" fill="#f59e0b" />
                     <line x1="12" y1="12" x2="6" y2="7" />
                     <line x1="12" y1="12" x2="18" y2="7" />
                     <line x1="12" y1="12" x2="6" y2="17" />
@@ -244,10 +425,9 @@ export const Page01_LandingPage: React.FC = () => {
                 <span className="font-bold text-sm sm:text-base tracking-tight">Inclusive</span>
               </div>
 
-              {/* 3. Innovative */}
-              <div className="flex items-center gap-2.5 text-[#0f2d59]">
+              <div className="flex items-center gap-2.5 text-white">
                 <div className="w-7 h-7 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-[#0f2d59] fill-none stroke-[2.2]" strokeLinecap="round">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-emerald-400 fill-none stroke-[2.2]" strokeLinecap="round">
                     <circle cx="12" cy="12" r="4" />
                     <line x1="12" y1="2" x2="12" y2="5" />
                     <line x1="12" y1="19" x2="12" y2="22" />
@@ -262,10 +442,9 @@ export const Page01_LandingPage: React.FC = () => {
                 <span className="font-bold text-sm sm:text-base tracking-tight">Innovative</span>
               </div>
 
-              {/* 4. Impact Driven */}
-              <div className="flex items-center gap-2.5 text-[#0f2d59]">
+              <div className="flex items-center gap-2.5 text-white">
                 <div className="w-7 h-7 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-[#0f2d59] fill-none stroke-[2.2]">
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 stroke-purple-400 fill-none stroke-[2.2]">
                     <circle cx="12" cy="12" r="8" />
                     <circle cx="12" cy="12" r="3" />
                     <line x1="12" y1="2" x2="12" y2="6" strokeLinecap="round" />
@@ -283,9 +462,9 @@ export const Page01_LandingPage: React.FC = () => {
       </section>
 
       {/* ============================================================== */}
-      {/* STATE PORTAL OVERVIEW & STATS BAR (Image 1 Exact Match)       */}
+      {/* STATE PORTAL OVERVIEW & STATS BAR                             */}
       {/* ============================================================== */}
-      <section className="bg-slate-50/70 border-b border-slate-200 py-10 lg:py-12">
+      <section id="main-content" className="bg-slate-50/70 border-b border-slate-200 py-10 lg:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           
           {/* 1. TOP 4 QUICK NAVIGATION CARDS - Role Aware & Enhanced Hover Effects */}
@@ -517,7 +696,7 @@ export const Page01_LandingPage: React.FC = () => {
                             Pilot project for Water Quality Monitoring approved.
                           </p>
                         </div>
-                        <div className="py-[#0f2d59] py-2.5 flex items-start gap-3">
+                        <div className="py-2.5 flex items-start gap-3">
                           <span className="font-semibold text-slate-400 shrink-0 min-w-[78px]">{formatDate(5)}</span>
                           <p className="text-slate-700 font-medium leading-snug">
                             5 new startups registered this week.
@@ -773,7 +952,7 @@ export const Page01_LandingPage: React.FC = () => {
       </section>
 
       {/* ============================================================== */}
-      {/* 3. AI REQUIREMENT ANALYSIS SPOTLIGHT - Strictly Aligned        */}
+      {/* 3. AI REQUIREMENT ANALYSIS SPOTLIGHT                           */}
       {/* ============================================================== */}
       <section className="py-12 bg-gradient-to-r from-[#0b2b4d] via-[#0d345e] to-[#0b1e33] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -823,16 +1002,16 @@ export const Page01_LandingPage: React.FC = () => {
                   <span className="font-bold text-white">Waste Management</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1.5">
-                  <span className="text-slate-400">Technologies:</span>
+                  <span className="text-slate-400">Tech Stack:</span>
                   <span className="font-bold text-white">Computer Vision, IoT</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1.5">
-                  <span className="text-slate-400">Target KPI:</span>
-                  <span className="font-bold text-emerald-400">Accuracy &gt; 90%</span>
+                  <span className="text-slate-400">Target Accuracy:</span>
+                  <span className="font-bold text-emerald-400">&gt; 90% Classification</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Top Match:</span>
-                  <span className="font-bold text-cyan-300">GreenTech (94%)</span>
+                  <span className="text-slate-400">Est. Pilot Period:</span>
+                  <span className="font-bold text-white">90 Days</span>
                 </div>
               </div>
             </div>
@@ -841,21 +1020,16 @@ export const Page01_LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* ============================================================== */}
-      {/* 4. LIVE CHALLENGES PREVIEW - Uniform Aligned Cards             */}
-      {/* ============================================================== */}
+      {/* Active Government Challenges Section */}
       <section className="py-12 lg:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div>
             <span className="text-xs font-bold text-blue-700 uppercase tracking-widest">
-              Maharashtra State Bidding
+              Live Department Requirements
             </span>
-            <h2 className="text-2xl font-black text-slate-900 mt-1">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
               Active Government Challenges
             </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Eligible DPIIT startups can submit solution proposals for funded 90-day pilots.
-            </p>
           </div>
           <Link
             to="/marketplace"
