@@ -288,26 +288,26 @@ export const Page01_LandingPage: React.FC = () => {
       <section className="bg-slate-50/70 border-b border-slate-200 py-10 lg:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           
-          {/* 1. TOP 4 QUICK NAVIGATION CARDS - Role Aware */}
+          {/* 1. TOP 4 QUICK NAVIGATION CARDS - Role Aware & Enhanced Hover Effects */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {/* Card 1: Government Challenges */}
             <Link
               to="/marketplace"
-              className="p-5 rounded-2xl bg-[#eff6ff] hover:bg-[#e0edff] border border-blue-100/90 shadow-2xs hover:shadow-md hover:scale-[1.03] transition-all duration-200 transform group flex flex-col justify-between cursor-pointer"
+              className="p-5 rounded-2xl bg-[#eff6ff] hover:bg-[#e0edff] border-2 border-blue-100/90 hover:border-blue-400 shadow-2xs hover:shadow-xl hover:shadow-blue-500/10 hover:scale-[1.04] transition-all duration-300 ease-out transform group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-start justify-between gap-3">
-                <div className="w-11 h-11 rounded-xl bg-blue-600/10 text-[#0f2d59] flex items-center justify-center shrink-0">
-                  <Building2 className="w-6 h-6 text-[#0f2d59]" />
+                <div className="w-11 h-11 rounded-xl bg-blue-600/10 text-[#0f2d59] group-hover:bg-blue-600 group-hover:text-white flex items-center justify-center shrink-0 transition-all duration-300">
+                  <Building2 className="w-6 h-6" />
                 </div>
-                <div className="w-7 h-7 rounded-full bg-white/80 flex items-center justify-center text-blue-600 group-hover:translate-x-1 transition-transform">
+                <div className="w-8 h-8 rounded-full bg-white/90 group-hover:bg-blue-600 group-hover:text-white flex items-center justify-center text-blue-600 group-hover:translate-x-1.5 transition-all duration-300 shadow-2xs">
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
               <div className="mt-4 space-y-1">
-                <h3 className="font-extrabold text-[#0f2d59] text-base leading-tight">
-                  Government Challenges <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">शासकीय आव्हाने</span>
+                <h3 className="font-extrabold text-[#0f2d59] group-hover:text-blue-700 text-base leading-tight transition-colors">
+                  Government Challenges <span className="block text-sm font-semibold text-slate-700 group-hover:text-blue-900 font-sans mt-0.5 transition-colors">शासकीय आव्हाने</span>
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                <p className="text-xs text-slate-600 group-hover:text-slate-800 leading-relaxed pt-1 transition-colors">
                   Explore real-world problems from various departments
                 </p>
               </div>
@@ -321,24 +321,24 @@ export const Page01_LandingPage: React.FC = () => {
                 role === 'evaluator' ? '/evaluations/1' :
                 role === 'admin' ? '/admin' : '/marketplace'
               }
-              className="p-5 rounded-2xl bg-[#fff7ed] hover:bg-[#ffedd5] border border-amber-100/90 shadow-2xs hover:shadow-md hover:scale-[1.03] transition-all duration-200 transform group flex flex-col justify-between cursor-pointer"
+              className="p-5 rounded-2xl bg-[#fff7ed] hover:bg-[#ffedd5] border-2 border-amber-100/90 hover:border-amber-400 shadow-2xs hover:shadow-xl hover:shadow-amber-500/10 hover:scale-[1.04] transition-all duration-300 ease-out transform group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-start justify-between gap-3">
-                <div className="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0">
-                  <Users className="w-6 h-6 text-amber-700" />
+                <div className="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-700 group-hover:bg-amber-500 group-hover:text-white flex items-center justify-center shrink-0 transition-all duration-300">
+                  <Users className="w-6 h-6" />
                 </div>
-                <div className="w-7 h-7 rounded-full bg-white/80 flex items-center justify-center text-amber-600 group-hover:translate-x-1 transition-transform">
+                <div className="w-8 h-8 rounded-full bg-white/90 group-hover:bg-amber-600 group-hover:text-white flex items-center justify-center text-amber-600 group-hover:translate-x-1.5 transition-all duration-300 shadow-2xs">
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
               <div className="mt-4 space-y-1">
-                <h3 className="font-extrabold text-[#0f2d59] text-base leading-tight">
+                <h3 className="font-extrabold text-[#0f2d59] group-hover:text-amber-800 text-base leading-tight transition-colors">
                   {role === 'government' ? 'Startup Solutions' : 'Startup Opportunities'}{' '}
-                  <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">
+                  <span className="block text-sm font-semibold text-slate-700 group-hover:text-amber-900 font-sans mt-0.5 transition-colors">
                     {role === 'government' ? 'स्टार्टअप उपाय' : 'स्टार्टअप संधी'}
                   </span>
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                <p className="text-xs text-slate-600 group-hover:text-slate-800 leading-relaxed pt-1 transition-colors">
                   {role === 'government' ? 'Review innovative solutions submitted by startups' : 'Discover opportunities to collaborate with Government'}
                 </p>
               </div>
@@ -348,28 +348,28 @@ export const Page01_LandingPage: React.FC = () => {
             <Link
               to={
                 !isAuthenticated ? '/login?role=startup' :
-                role === 'government' ? '/challenge/new' :
+                role === 'government' ? '/challenges/create' :
                 role === 'evaluator' ? '/evaluations/1' :
                 role === 'admin' ? '/admin' : '/marketplace'
               }
-              className="p-5 rounded-2xl bg-[#f0fdf4] hover:bg-[#dcfce7] border border-emerald-100/90 shadow-2xs hover:shadow-md hover:scale-[1.03] transition-all duration-200 transform group flex flex-col justify-between cursor-pointer"
+              className="p-5 rounded-2xl bg-[#f0fdf4] hover:bg-[#dcfce7] border-2 border-emerald-100/90 hover:border-emerald-400 shadow-2xs hover:shadow-xl hover:shadow-emerald-500/10 hover:scale-[1.04] transition-all duration-300 ease-out transform group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-start justify-between gap-3">
-                <div className="w-11 h-11 rounded-xl bg-emerald-600/10 text-emerald-700 flex items-center justify-center shrink-0">
-                  <FileText className="w-6 h-6 text-emerald-700" />
+                <div className="w-11 h-11 rounded-xl bg-emerald-600/10 text-emerald-700 group-hover:bg-emerald-600 group-hover:text-white flex items-center justify-center shrink-0 transition-all duration-300">
+                  <FileText className="w-6 h-6" />
                 </div>
-                <div className="w-7 h-7 rounded-full bg-white/80 flex items-center justify-center text-emerald-600 group-hover:translate-x-1 transition-transform">
+                <div className="w-8 h-8 rounded-full bg-white/90 group-hover:bg-emerald-600 group-hover:text-white flex items-center justify-center text-emerald-600 group-hover:translate-x-1.5 transition-all duration-300 shadow-2xs">
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
               <div className="mt-4 space-y-1">
-                <h3 className="font-extrabold text-[#0f2d59] text-base leading-tight">
+                <h3 className="font-extrabold text-[#0f2d59] group-hover:text-emerald-800 text-base leading-tight transition-colors">
                   {role === 'government' ? 'Create Challenge' : 'Submit Proposal'}{' '}
-                  <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">
+                  <span className="block text-sm font-semibold text-slate-700 group-hover:text-emerald-900 font-sans mt-0.5 transition-colors">
                     {role === 'government' ? 'आव्हाने तयार करा' : 'प्रस्ताव सादर करा'}
                   </span>
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                <p className="text-xs text-slate-600 group-hover:text-slate-800 leading-relaxed pt-1 transition-colors">
                   {role === 'government' ? 'Formulate and post new department challenge' : 'Share your innovative solution for a challenge'}
                 </p>
               </div>
@@ -383,24 +383,24 @@ export const Page01_LandingPage: React.FC = () => {
                 role === 'evaluator' ? '/evaluations/1' :
                 role === 'admin' ? '/admin' : '/marketplace'
               }
-              className="p-5 rounded-2xl bg-[#f5f3ff] hover:bg-[#ede9fe] border border-purple-100/90 shadow-2xs hover:shadow-md hover:scale-[1.03] transition-all duration-200 transform group flex flex-col justify-between cursor-pointer"
+              className="p-5 rounded-2xl bg-[#f5f3ff] hover:bg-[#ede9fe] border-2 border-purple-100/90 hover:border-purple-400 shadow-2xs hover:shadow-xl hover:shadow-purple-500/10 hover:scale-[1.04] transition-all duration-300 ease-out transform group flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-start justify-between gap-3">
-                <div className="w-11 h-11 rounded-xl bg-purple-600/10 text-purple-700 flex items-center justify-center shrink-0">
-                  <BarChart3 className="w-6 h-6 text-purple-700" />
+                <div className="w-11 h-11 rounded-xl bg-purple-600/10 text-purple-700 group-hover:bg-purple-600 group-hover:text-white flex items-center justify-center shrink-0 transition-all duration-300">
+                  <BarChart3 className="w-6 h-6" />
                 </div>
-                <div className="w-7 h-7 rounded-full bg-white/80 flex items-center justify-center text-purple-600 group-hover:translate-x-1 transition-transform">
+                <div className="w-8 h-8 rounded-full bg-white/90 group-hover:bg-purple-600 group-hover:text-white flex items-center justify-center text-purple-600 group-hover:translate-x-1.5 transition-all duration-300 shadow-2xs">
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
               <div className="mt-4 space-y-1">
-                <h3 className="font-extrabold text-[#0f2d59] text-base leading-tight">
+                <h3 className="font-extrabold text-[#0f2d59] group-hover:text-purple-800 text-base leading-tight transition-colors">
                   {role === 'government' ? 'Department Workspace' : 'Track Application'}{' '}
-                  <span className="block text-sm font-semibold text-slate-700 font-sans mt-0.5">
+                  <span className="block text-sm font-semibold text-slate-700 group-hover:text-purple-900 font-sans mt-0.5 transition-colors">
                     {role === 'government' ? 'विभाग कार्यक्षेत्र' : 'अर्जाचा मागोवा घ्या'}
                   </span>
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                <p className="text-xs text-slate-600 group-hover:text-slate-800 leading-relaxed pt-1 transition-colors">
                   {role === 'government' ? 'Monitor active pilot evaluations and approvals' : 'Check the status of your proposal, pilot or procurement'}
                 </p>
               </div>

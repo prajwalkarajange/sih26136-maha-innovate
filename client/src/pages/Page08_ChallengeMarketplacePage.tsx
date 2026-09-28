@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWorkflow } from '../context/WorkflowContext';
 import { useMahi } from '../context/MahiContext';
+import { useAuth } from '../context/AuthContext';
 import { MahiPill } from '../components/MahiPill';
 import {
   Search,
@@ -12,13 +13,15 @@ import {
   Tag,
   ArrowRight,
   Sparkles,
-  Bot
+  Bot,
+  FileText
 } from 'lucide-react';
 
 export const Page08_ChallengeMarketplacePage: React.FC = () => {
   const navigate = useNavigate();
   const { challenges, setActiveChallengeId } = useWorkflow();
   const { askMahiContext } = useMahi();
+  const { isAuthenticated, role } = useAuth();
 
   const [search, setSearch] = useState('');
   const [selectedTech, setSelectedTech] = useState('ALL');
@@ -41,7 +44,7 @@ export const Page08_ChallengeMarketplacePage: React.FC = () => {
   });
 
   return (
-    <div className="space-y-6 w-full">
+    <div className="space-y-6 w-full font-sans">
       {/* Top Header & Search Bar matching Reference Image */}
       <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-2xs space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -61,7 +64,7 @@ export const Page08_ChallengeMarketplacePage: React.FC = () => {
                 'marketplace'
               )
             }
-            className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-xs font-bold border border-blue-200 transition"
+            className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-xs font-bold border border-blue-200 transition cursor-pointer"
           >
             <Bot className="w-4 h-4 text-blue-600" />
             <span>AI Skills Match Finder</span>
@@ -84,7 +87,7 @@ export const Page08_ChallengeMarketplacePage: React.FC = () => {
           <select
             value={selectedTech}
             onChange={(e) => setSelectedTech(e.target.value)}
-            className="px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-800 focus:bg-white focus:ring-1 focus:ring-blue-500"
+            className="px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-800 focus:bg-white focus:ring-1 focus:ring-blue-500 cursor-pointer"
           >
             <option value="ALL">All Technologies</option>
             <option value="AI">AI / Computer Vision</option>
@@ -96,7 +99,7 @@ export const Page08_ChallengeMarketplacePage: React.FC = () => {
           <select
             value={selectedDept}
             onChange={(e) => setSelectedDept(e.target.value)}
-            className="px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-800 focus:bg-white focus:ring-1 focus:ring-blue-500"
+            className="px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium text-slate-800 focus:bg-white focus:ring-1 focus:ring-blue-500 cursor-pointer"
           >
             <option value="ALL">All Departments</option>
             <option value="Urban">Urban Development</option>
@@ -106,16 +109,16 @@ export const Page08_ChallengeMarketplacePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Challenge Cards matching Reference Image */}
+      {/* Challenge Cards with Hover Scale & Color Effect + Role-Aware Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredChallenges.map((ch) => (
           <div
             key={ch.id}
-            className="bg-white rounded-xl border border-slate-200 hover:border-blue-400 shadow-2xs hover:shadow-md transition p-5 flex flex-col justify-between"
+            className="bg-white rounded-xl border border-slate-200 hover:border-blue-400 shadow-2xs hover:shadow-xl hover:scale-[1.03] transition-all duration-300 ease-out transform group p-5 flex flex-col justify-between cursor-pointer"
           >
             <div>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-100 flex items-center gap-1">
+                <span className="text-xs font-bold text-blue-700 bg-blue-50 group-hover:bg-blue-100 px-2.5 py-0.5 rounded border border-blue-100 transition-colors flex items-center gap-1">
                   <Building2 className="w-3.5 h-3.5" />
                   <span>{ch.department_name || 'Dept. of Urban Development'}</span>
                 </span>
@@ -124,7 +127,7 @@ export const Page08_ChallengeMarketplacePage: React.FC = () => {
                 </span>
               </div>
 
-              <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition">
+              <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                 {ch.title}
               </h3>
 
@@ -137,7 +140,7 @@ export const Page08_ChallengeMarketplacePage: React.FC = () => {
                 {ch.required_technologies.map((t, tidx) => (
                   <span
                     key={tidx}
-                    className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-[11px] font-medium"
+                    className="px-2 py-0.5 bg-slate-100 group-hover:bg-blue-50 text-slate-700 group-hover:text-blue-800 rounded text-[11px] font-medium transition-colors"
                   >
                     {t}
                   </span>
@@ -160,16 +163,68 @@ export const Page08_ChallengeMarketplacePage: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                <button
-                  onClick={() => {
-                    setActiveChallengeId(ch.id);
-                    navigate(`/proposals/submit?challengeId=${ch.id}`);
-                  }}
-                  className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs shadow-sm transition flex items-center gap-1"
-                >
-                  <span>Submit Proposal</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                {isAuthenticated && role === 'government' ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        setActiveChallengeId(ch.id);
+                        navigate('/proposals');
+                      }}
+                      className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs shadow-xs hover:shadow-md transition flex items-center gap-1 cursor-pointer"
+                    >
+                      <FileText className="w-3.5 h-3.5" />
+                      <span>View Proposals</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setActiveChallengeId(ch.id);
+                        navigate(`/ai-recommendations?challengeId=${ch.id}`);
+                      }}
+                      className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 font-bold rounded-lg text-xs transition flex items-center gap-1 cursor-pointer"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>AI Matches</span>
+                    </button>
+                  </>
+                ) : isAuthenticated && role === 'evaluator' ? (
+                  <button
+                    onClick={() => {
+                      setActiveChallengeId(ch.id);
+                      navigate(`/evaluations/${ch.id}`);
+                    }}
+                    className="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-xs shadow-xs hover:shadow-md transition flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>Evaluate Proposals</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                ) : isAuthenticated && role === 'admin' ? (
+                  <button
+                    onClick={() => {
+                      setActiveChallengeId(ch.id);
+                      navigate('/proposals');
+                    }}
+                    className="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg text-xs shadow-xs hover:shadow-md transition flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>Manage Challenge</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setActiveChallengeId(ch.id);
+                      if (isAuthenticated) {
+                        navigate(`/proposals/submit?challengeId=${ch.id}`);
+                      } else {
+                        navigate('/login?role=startup');
+                      }
+                    }}
+                    className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs shadow-xs hover:shadow-md transition flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>Submit Proposal</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
